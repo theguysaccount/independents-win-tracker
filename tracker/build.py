@@ -1049,7 +1049,11 @@ def build(out=None, site_url=None, env=None, now=None, data_dir=DATA):
     not_found(site)
     feed(site)
     key_path = os.path.join(ROOT, "config", "indexnow-key.txt")
-    seo_files(site, open(key_path).read().strip() if os.path.exists(key_path) else "")
+    key = ""
+    if os.path.exists(key_path):
+        with open(key_path) as f:
+            key = f.read().strip()
+    seo_files(site, key)
     return site
 
 

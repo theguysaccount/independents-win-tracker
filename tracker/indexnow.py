@@ -58,13 +58,18 @@ def main(argv=None):
     ap.add_argument("--prev", default="")
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args(argv)
-    urls = [u.strip() for u in open(a.urls) if u.strip()]
-    prev = [u.strip() for u in open(a.prev)] if a.prev and os.path.exists(a.prev) else []
+    with open(a.urls) as f:
+        urls = [u.strip() for u in f if u.strip()]
+    prev = []
+    if a.prev and os.path.exists(a.prev):
+        with open(a.prev) as f:
+            prev = [u.strip() for u in f]
     prev = [u for u in prev if u.startswith("http")]
     ok, why = should_submit(urls, prev, now_utc().hour, a.force)
     print(f"IndexNow: {'submitting' if ok else 'skipping'} ({why})")
     if ok:
-        key = open(os.path.join(ROOT, "config", "indexnow-key.txt")).read().strip()
+        with open(os.path.join(ROOT, "config", "indexnow-key.txt")) as f:
+            key = f.read().strip()
         site_url = os.environ.get("SITE_URL") or urls[0].rsplit("/", 1)[0]
         submit(urls, key, site_url)
     return 0
