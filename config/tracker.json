@@ -1,0 +1,39 @@
+{
+ "site": {
+  "name": "Independents Tracker",
+  "tagline": "Can independents win in 2026? Live prediction-market odds, FEC money and party-line voting, every number sourced.",
+  "election_date": "2026-11-03",
+  "default_url": "https://theguysaccount.github.io/independents-win-tracker",
+  "repo": "theguysaccount/independents-win-tracker"
+ },
+ "fec": {
+  "cycle": 2026,
+  "independent_codes": {
+   "IND": "Independent",
+   "NPA": "No Party Affiliation",
+   "NNE": "None",
+   "UN": "Unaffiliated",
+   "NON": "Non-Party",
+   "NOP": "No Party Preference",
+   "N": "Nonpartisan",
+   "OTH": "Other"
+  },
+  "min_receipts_listed": 5000
+ },
+ "slate": {
+  "label": "INC '26 slate",
+  "name": "2026 Independent Slate",
+  "description": "Seven federal candidates presented as the 2026 Independent Slate at the Independent National Convention (Washington, D.C., Sept. 23-25, 2026). The slate was assembled by Independents Win PAC. This tracker is not affiliated with the convention or the PAC and lists the slate only as a matter of record.",
+  "source_name": "The Fulcrum, Oct. 14, 2026",
+  "source_url": "https://thefulcrum.us/ethics-leadership/independent-political-movement",
+  "fec_ids": ["S4NE00207", "S6MT00287", "S6ID00146", "S6SD01117", "H2CA03157", "H6AK01092", "H6ID01318"]
+ },
+ "exclude": {},
+ "markets": {
+  "kalshi_aggregate_series": ["KXINDCOUNT", "KXISENATEWON", "KXIHOUSEWON", "KXUSINDEPENDENTCONGRESS"],
+  "polymarket_aggregate_slugs": ["how-many-independents-will-be-elected-to-congress", "which-party-will-win-the-senate-in-2026"],
+  "max_spread_for_midpoint": 0.1,
+  "thin_market_volume_usd": 25000
+ },
+ "sources_enabled": {"fec": true, "kalshi": true, "polymarket": true, "voteview": true}
+}

@@ -1,0 +1,144 @@
+# Hourly: reread the markets (and the FEC and Voteview files when they change), test, rebuild,
+# guard and publish the site, commit the data snapshot, ping IndexNow.
+# Fails safe: a source that cannot be read keeps its last good data (each page prints its own
+# as-of time); a failed test or guard stops before deploy, so the last good site stays live.
+name: Update and deploy
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  push:
+    branches: [main]
+    paths-ignore: ["data/**", "**.md", "docs/**"]
+  workflow_dispatch:
+    inputs:
+      discover:
+        description: Rescan every market for newly listed independents
+        type: boolean
+        default: false
+      force:
+        description: Re-download the FEC and Voteview files even if unchanged
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  actions: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+env:
+  SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+  GOATCOUNTER_URL: ${{ vars.GOATCOUNTER_URL }}   # optional: https://<code>.goatcounter.com/count
+  SUPPORT_URL: ${{ vars.SUPPORT_URL }}           # optional: e.g. a GitHub Sponsors page
+  SUPPORT_LABEL: ${{ vars.SUPPORT_LABEL }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      indexnow: ${{ steps.urls.outputs.indexnow }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh sources (each one fails on its own and keeps its last good data)
+        if: github.event_name != 'push'
+        run: python3 -m tracker.refresh ${{ inputs.discover && '--discover' || '' }} ${{ inputs.force && '--force' || '' }}
+
+      - name: Tests
+        run: python3 -m unittest discover -s tests
+
+      - name: Build site and share cards
+        run: python3 -m tracker.og --site _site
+
+      - name: Guard the build
+        run: python3 -m tracker.guard _site
+
+      - name: Commit the data snapshot
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "No data changes."; exit 0; fi
+          git commit -q -m "data: refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do
+            if git pull -q --rebase origin main && git push -q origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          echo "::warning::Could not push the data snapshot; the next run will refetch."
+
+      - name: Keep the schedules alive (GitHub pauses them after 60 days without a commit)
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          last=$(git log -1 --format=%ct origin/main 2>/dev/null || git log -1 --format=%ct)
+          if [ $(( $(date +%s) - last )) -gt $(( 45 * 86400 )) ]; then
+            git commit -q --allow-empty -m "keep-alive: no data changed in 45 days"
+            git push -q origin HEAD:main || echo "::warning::keep-alive push failed"
+          fi
+          for wf in update.yml selftest.yml; do
+            gh api -X PUT "repos/$GITHUB_REPOSITORY/actions/workflows/$wf/enable" >/dev/null || echo "::warning::could not re-enable $wf"
+          done
+
+      - name: Compare page list with the live site (for IndexNow)
+        id: urls
+        run: |
+          curl -fsS "$SITE_URL/urls.txt" -o prev-urls.txt || : > prev-urls.txt
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import datetime, os
+          new = set(open("_site/urls.txt").read().split())
+          old = set(open("prev-urls.txt").read().split())
+          hour = datetime.datetime.now(datetime.timezone.utc).hour
+          manual = os.environ["GITHUB_EVENT_NAME"] in ("push", "workflow_dispatch")
+          print("indexnow=" + ("true" if new != old or hour == 9 or manual else "false"))
+          PY
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: urls
+          path: |
+            _site/urls.txt
+            prev-urls.txt
+          retention-days: 3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  indexnow:
+    needs: [build, deploy]
+    if: needs.build.outputs.indexnow == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          name: urls
+          path: urls
+      - name: Submit to IndexNow (never fails the run)
+        run: python3 -m tracker.indexnow --urls urls/_site/urls.txt --force || true
