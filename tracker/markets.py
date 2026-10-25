@@ -175,8 +175,13 @@ def kalshi_event(ticker):
 
 
 def kalshi_series_open_events(series):
-    j = get_json(f"{KALSHI}/events?series_ticker={urllib.parse.quote(series)}&status=open&with_nested_markets=true&limit=20", timeout=60)
-    return j.get("events", [])
+    """The series' open events; once a market has closed or settled, its latest closed or settled event."""
+    for status in ("open", "closed", "settled"):
+        j = get_json(f"{KALSHI}/events?series_ticker={urllib.parse.quote(series)}&status={status}&with_nested_markets=true&limit=20", timeout=60)
+        evs = j.get("events", [])
+        if evs:
+            return evs if status == "open" else sorted(evs, key=lambda e: e.get("event_ticker", ""), reverse=True)
+    return []
 
 
 def kalshi_url(series_ticker):
@@ -320,7 +325,11 @@ def aggregates(cfg, max_spread):
             outs = []
             for m in ev.get("markets", []):
                 q = kalshi_quote(m, max_spread)
-                outs.append({"id": m["ticker"], "label": m.get("yes_sub_title") or "Yes", "question": m.get("title", ""), **q})
+                result = (m.get("result") or "").lower()
+                if result in ("yes", "no"):
+                    q["price"] = 1.0 if result == "yes" else 0.0
+                outs.append({"id": m["ticker"], "label": m.get("yes_sub_title") or "Yes", "question": m.get("title", ""),
+                             "result": result, **q})
             out.append({"source": "kalshi", "id": ev["event_ticker"], "title": ev.get("title", ""),
                         "series": series, "url": kalshi_url(series), "outcomes": outs})
     for slug in cfg["markets"].get("polymarket_aggregate_slugs", []):
@@ -332,10 +341,12 @@ def aggregates(cfg, max_spread):
             continue
         outs = []
         for m in ev.get("markets", []):
-            if not m.get("active") or m.get("closed") or m.get("outcomePrices") in (None, "", "[]"):
+            if m.get("outcomePrices") in (None, "", "[]") or (not m.get("active") and not m.get("closed")):
                 continue
+            q = poly_quote(m, max_spread)
+            result = ("yes" if q["price"] == 1.0 else "no") if m.get("closed") and q["price"] in (0.0, 1.0) else ""
             outs.append({"id": str(m["id"]), "label": (m.get("groupItemTitle") or "").strip(),
-                         "question": m.get("question", ""), "token": _first_token(m), **poly_quote(m, max_spread)})
+                         "question": m.get("question", ""), "token": _first_token(m), "result": result, **q})
         out.append({"source": "polymarket", "id": slug, "title": (ev.get("title") or "").strip(),
                     "url": f"https://polymarket.com/event/{slug}", "outcomes": outs})
     return out
@@ -434,6 +445,17 @@ def refresh(cfg, fec, discover=False, now=None):
         if need_discovery:
             try:
                 k = kalshi_discover(fec, max_spread, context)
+                # Discovery sees only open events. Keep reading previously tracked events that have
+                # since closed or resolved, so election-night results stay on the site.
+                seen = {(r["source"], r["race"]) for r in k}
+                for key, r in prev_races.items():
+                    if key[0] == "kalshi" and ("kalshi", r["race"]) not in seen:
+                        try:
+                            rec = kalshi_race_record(kalshi_event(key[1]), r["race"], fec, max_spread)
+                            if any(_linked(o) for o in rec["outcomes"]) or r["race"] in context:
+                                k.append(rec)
+                        except Exception as e:
+                            keep_stale(key, e)
                 notes.append(f"kalshi discovery: {len(k)} events")
                 races += k
             except Exception as e:  # discovery failed: fall back to the tracked set

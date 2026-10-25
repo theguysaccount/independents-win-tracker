@@ -582,7 +582,8 @@ def candidates_page(site):
 
 def dist_rows(outcomes, fmt_label=lambda s: s):
     return "".join(
-        f'<div class="row"><span>{E(fmt_label(o["label"]))}</span><span class="track"><i style="width:{max(0, min(100, (o.get("price") or 0) * 100)):.1f}%"></i></span><span class="r num">{pct(o.get("price"))}</span></div>'
+        f'<div class="row"><span>{E(fmt_label(o["label"]))}</span><span class="track"><i style="width:{max(0, min(100, (o.get("price") or 0) * 100)):.1f}%"></i></span>'
+        f'<span class="r num">{"Resolved " + o["result"].upper() if o.get("result") in ("yes", "no") else pct(o.get("price"))}</span></div>'
         for o in outcomes)
 
 
