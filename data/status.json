@@ -1,27 +1,27 @@
 {
  "fec": {
-  "checked_at": "2026-10-25T21:30:02Z",
+  "checked_at": "2026-10-25T21:50:22Z",
   "error": "",
   "last_changed": "2026-10-25T21:07:34Z",
-  "last_success": "2026-10-25T21:30:02Z",
+  "last_success": "2026-10-25T21:50:22Z",
   "note": "FEC bulk files unchanged",
   "ok": true,
   "warnings": []
  },
  "markets": {
-  "checked_at": "2026-10-25T21:30:02Z",
+  "checked_at": "2026-10-25T21:50:22Z",
   "error": "",
-  "last_changed": "2026-10-25T21:30:02Z",
-  "last_success": "2026-10-25T21:30:02Z",
-  "note": "kalshi discovery: 9 events; polymarket discovery: 5 events; 14 race markets (0 stale), 35 independent outcomes, 6 aggregate markets",
+  "last_changed": "2026-10-25T21:50:22Z",
+  "last_success": "2026-10-25T21:50:22Z",
+  "note": "kalshi discovery: 10 events; polymarket discovery: 7 events; 17 race markets (0 stale), 39 independent outcomes, 6 aggregate markets",
   "ok": true,
   "warnings": []
  },
  "votes": {
-  "checked_at": "2026-10-25T21:30:02Z",
+  "checked_at": "2026-10-25T21:50:22Z",
   "error": "",
   "last_changed": "2026-10-25T21:09:25Z",
-  "last_success": "2026-10-25T21:30:02Z",
+  "last_success": "2026-10-25T21:50:22Z",
   "note": "Voteview files unchanged",
   "ok": true,
   "warnings": []
