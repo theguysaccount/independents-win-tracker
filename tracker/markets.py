@@ -222,8 +222,9 @@ def best_per_race(records):
     return sorted(best.values(), key=lambda r: (r["race"], r["source"]))
 
 
-def kalshi_discover(fec, max_spread):
-    """Every open 2026 Kalshi House/Senate event that lists an independent candidate."""
+def kalshi_discover(fec, max_spread, context_races=()):
+    """Every open 2026 Kalshi House/Senate event that lists an independent candidate, plus the
+    events of `context_races` (slate candidates no market lists, shown for context)."""
     found = []
     for ev in kalshi_events_all():
         if not ev.get("event_ticker", "").endswith("-26"):
@@ -232,7 +233,7 @@ def kalshi_discover(fec, max_spread):
         if not race or race not in fec.get("races", {}):
             continue
         rec = kalshi_race_record(ev, race, fec, max_spread)
-        if any(o["cand_id"] and fec["candidates"][o["cand_id"]]["independent"] for o in rec["outcomes"]):
+        if race in context_races or any(o["cand_id"] and fec["candidates"][o["cand_id"]]["independent"] for o in rec["outcomes"]):
             found.append(rec)
     return best_per_race(found)
 
@@ -288,7 +289,7 @@ def _first_token(m):
         return ""
 
 
-def poly_discover(fec, races, max_spread):
+def poly_discover(fec, races, max_spread, context_races=()):
     found = []
     for race in sorted(races):
         for slug in poly_slugs(race):
@@ -299,8 +300,8 @@ def poly_discover(fec, races, max_spread):
             if not ev:
                 continue
             rec = poly_race_record(ev, race, fec, max_spread)
-            if any((o["cand_id"] and fec["candidates"][o["cand_id"]]["independent"]) or o.get("covers")
-                   for o in rec["outcomes"]):
+            if race in context_races or any((o["cand_id"] and fec["candidates"][o["cand_id"]]["independent"]) or o.get("covers")
+                                            for o in rec["outcomes"]):
                 found.append(rec)
             time.sleep(0.2)
     return found
@@ -421,6 +422,7 @@ def refresh(cfg, fec, discover=False, now=None):
     prev = read_json(OUT, {}) or {}
     prev_races = {(r["source"], r["id"]): r for r in prev.get("races", [])}
     need_discovery = discover or not prev_races
+    context = {fec["candidates"][cid]["race"] for cid in cfg.get("slate", {}).get("fec_ids", []) if cid in fec.get("candidates", {})}
     races, notes, errors = [], [], []
 
     def keep_stale(key, err):
@@ -431,7 +433,7 @@ def refresh(cfg, fec, discover=False, now=None):
     if enabled.get("kalshi", True):
         if need_discovery:
             try:
-                k = kalshi_discover(fec, max_spread)
+                k = kalshi_discover(fec, max_spread, context)
                 notes.append(f"kalshi discovery: {len(k)} events")
                 races += k
             except Exception as e:  # discovery failed: fall back to the tracked set
@@ -450,8 +452,8 @@ def refresh(cfg, fec, discover=False, now=None):
                 time.sleep(0.15)
     if enabled.get("polymarket", True):
         if need_discovery:
-            ind_races = {c["race"] for c in fec["candidates"].values() if c["independent"] and c["receipts"] >= 25000}
-            p = poly_discover(fec, ind_races, max_spread)
+            ind_races = {c["race"] for c in fec["candidates"].values() if c["independent"] and c["receipts"] >= 25000} | context
+            p = poly_discover(fec, ind_races, max_spread, context)
             notes.append(f"polymarket discovery: {len(p)} events")
             races += p
         else:

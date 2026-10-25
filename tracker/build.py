@@ -475,7 +475,8 @@ def candidate_page(site, c):
         else:
             summary.append(f"Polymarket’s market on whether an independent wins the race is at <strong>{pct(p['o'].get('price'))}</strong>.")
     if not k and not p:
-        summary.append(f"Neither Kalshi nor Polymarket lists {E(c['display'])} in a market for this race as of {tm(m.mk.get('fetched_at'))}.")
+        summary.append(f"Neither Kalshi nor Polymarket lists {E(c['display'])} in a market for this race as of {tm(m.mk.get('fetched_at'))}"
+                       + ("; the race's own markets are shown below for context." if c["race_markets"] else "."))
     summary.append(f"The campaign has reported raising <strong>{money(c['receipts'])}</strong> and had <strong>{money(c['coh'])}</strong> in cash on hand through {E(fmt_date(c['cvg_end']))}.")
     tags = [chip("I", c["party_label"]), chip("plain", {"I": "Incumbent", "C": "Challenger", "O": "Open seat"}.get(c["ici"], "Candidate"))]
     slate_cfg = site.cfg.get("slate", {})
