@@ -101,7 +101,7 @@ class MarketsTest(unittest.TestCase):
         self.assertEqual(by["Dan Osborn"]["price"], 0.255)
         self.assertEqual(by["Pete Ricketts"]["cand_id"], "S6NE00129")
         self.assertEqual(rec["outcomes"][0]["label"], "Pete Ricketts", "sorted by price")
-        self.assertEqual(rec["url"], "https://kalshi.com/markets/senatene")
+        self.assertEqual(rec["url"], "https://kalshi.com/markets/senatene/nebraska-senate-winner/senatene-26")
 
     def test_name_variants_match(self):
         rec = markets.kalshi_race_record(F.kalshi_event_ak(), "AK-H-00", self.fec, 0.1)

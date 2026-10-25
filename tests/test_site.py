@@ -80,7 +80,7 @@ class FixtureSiteTest(unittest.TestCase):
         html = self.read("candidates/dan-osborn/index.html")
         self.assertIn("25.5%", html)
         self.assertIn("https://www.fec.gov/data/candidate/S4NE00207/", html)
-        self.assertIn("https://kalshi.com/markets/senatene", html)
+        self.assertIn("https://kalshi.com/markets/senatene/nebraska-senate-winner/senatene-26", html)
         self.assertIn("https://polymarket.com/event/nebraska-senate-election-winner", html)
         self.assertIn("any</em> independent wins the race", html)
         self.assertIn('<link rel="canonical" href="https://example.test/independents-win-tracker/candidates/dan-osborn/">', html)

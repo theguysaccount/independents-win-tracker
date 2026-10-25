@@ -184,8 +184,12 @@ def kalshi_series_open_events(series):
     return []
 
 
-def kalshi_url(series_ticker):
-    return f"https://kalshi.com/markets/{series_ticker.lower()}"
+def kalshi_url(series_ticker, event_ticker="", title=""):
+    """Kalshi's web address for an event: /markets/<series>/<any slug>/<event>. The middle part is
+    cosmetic, but the event part matters: series such as KXHOUSERACE hold every House race."""
+    if not event_ticker:
+        return f"https://kalshi.com/markets/{series_ticker.lower()}"
+    return f"https://kalshi.com/markets/{series_ticker.lower()}/{slugify(title) or 'market'}/{event_ticker.lower()}"
 
 
 def kalshi_race_record(ev, race, fec, max_spread):
@@ -209,7 +213,7 @@ def kalshi_race_record(ev, race, fec, max_spread):
     return {
         "source": "kalshi", "id": ev["event_ticker"], "race": race,
         "title": ev.get("title", ""), "series": ev.get("series_ticker", ""),
-        "url": kalshi_url(ev.get("series_ticker", "")), "outcomes": outcomes,
+        "url": kalshi_url(ev.get("series_ticker", ""), ev["event_ticker"], ev.get("title", "")), "outcomes": outcomes,
     }
 
 
@@ -331,7 +335,7 @@ def aggregates(cfg, max_spread):
                 outs.append({"id": m["ticker"], "label": m.get("yes_sub_title") or "Yes", "question": m.get("title", ""),
                              "result": result, **q})
             out.append({"source": "kalshi", "id": ev["event_ticker"], "title": ev.get("title", ""),
-                        "series": series, "url": kalshi_url(series), "outcomes": outs})
+                        "series": series, "url": kalshi_url(series, ev["event_ticker"], ev.get("title", "")), "outcomes": outs})
     for slug in cfg["markets"].get("polymarket_aggregate_slugs", []):
         try:
             ev = poly_event(slug)
