@@ -91,14 +91,14 @@
      "volume_24h": 3.0
     },
     {
-     "ask": 0.1,
+     "ask": 0.11,
      "bid": 0.04,
      "id": "KXISENATEWON-26NOV03-AL3",
      "label": "At least 3",
      "last": 0.1,
      "open_interest": 44.43,
      "prev_price": 0.1,
-     "price": 0.07,
+     "price": 0.075,
      "question": "Will the number of U.S. Senate seats won by candidates unaffiliated with a political party be at least 3 in the 2026 U.S. Senate elections?",
      "volume": 44.43,
      "volume_24h": 0.0
@@ -161,14 +161,14 @@
    "id": "KXUSINDEPENDENTCONGRESS-26NOV03",
    "outcomes": [
     {
-     "ask": 0.46,
+     "ask": 0.45,
      "bid": 0.39,
      "id": "KXUSINDEPENDENTCONGRESS-26NOV03",
      "label": "Yes",
      "last": 0.46,
      "open_interest": 2084.63,
      "prev_price": 0.46,
-     "price": 0.425,
+     "price": 0.42,
      "question": "Will any independent or third-party candidate win an election in the U.S. House or Senate in 2026?",
      "volume": 8993.06,
      "volume_24h": 0.0
@@ -189,7 +189,7 @@
      "id": "4882440",
      "label": "0",
      "last": 0.57,
-     "liquidity": 24028.0176,
+     "liquidity": 23977.9259,
      "price": 0.56,
      "question": "Will 0 Independents be elected to Congress in 2026?",
      "token": "3873573133304725058821567885218502869709710914437915482052014711492627476615",
@@ -203,7 +203,7 @@
      "id": "4882441",
      "label": "1",
      "last": 0.3,
-     "liquidity": 15820.0033,
+     "liquidity": 15800.8033,
      "price": 0.275,
      "question": "Will 1 Independent be elected to Congress in 2026?",
      "token": "11024737243283509353487217755179556143471151973689472593578601757208531976589",
@@ -213,11 +213,11 @@
     {
      "ask": 0.18,
      "bid": 0.06,
-     "day_change": 0.005,
+     "day_change": 0.01,
      "id": "4882442",
      "label": "2",
      "last": 0.09,
-     "liquidity": 2298.0228,
+     "liquidity": 2310.3028,
      "price": 0.12,
      "question": "Will 2 Independents be elected to Congress in 2026?",
      "token": "96722805096217098567287748176151739276255265226462867280409354202439768906620",
@@ -231,7 +231,7 @@
      "id": "4882443",
      "label": "3",
      "last": 0.006,
-     "liquidity": 2072.65816,
+     "liquidity": 2044.2281,
      "price": 0.04,
      "question": "Will 3 Independents be elected to Congress in 2026?",
      "token": "86768597931205936136049345620780772108835169460216137063827403970067803933349",
@@ -245,7 +245,7 @@
      "id": "4882444",
      "label": "4+",
      "last": 0.069,
-     "liquidity": 16528.42916,
+     "liquidity": 16530.4006,
      "price": 0.042,
      "question": "Will 4 or more Independents be elected to Congress in 2026?",
      "token": "96812671928521529231263365559888168454903830681686625056443844678159219934452",
@@ -267,12 +267,12 @@
      "id": "562793",
      "label": "Democratic Party",
      "last": 0.66,
-     "liquidity": 715325.8143,
+     "liquidity": 694247.9779,
      "price": 0.655,
      "question": "Will the Democratic Party control the Senate after the 2026 Midterm elections?",
      "token": "113287701564209339913693347405685749986285999146352375265161592243948562084773",
-     "volume": 5322439.079136,
-     "volume_24h": 87417.66889100001
+     "volume": 5322634.957926,
+     "volume_24h": 87445.77439600001
     },
     {
      "ask": 0.35,
@@ -281,12 +281,12 @@
      "id": "562794",
      "label": "Republican Party",
      "last": 0.34,
-     "liquidity": 1352775.3884,
+     "liquidity": 1353766.0554,
      "price": 0.345,
      "question": "Will the Republican Party control the Senate after the 2026 Midterm elections?",
      "token": "51939490109676186832507970701169130490548061087912630009168726706475001411420",
-     "volume": 3842695.741853,
-     "volume_24h": 114576.194555
+     "volume": 3842972.210425,
+     "volume_24h": 111639.73842000002
     }
    ],
    "source": "polymarket",
@@ -294,9 +294,9 @@
    "url": "https://polymarket.com/event/which-party-will-win-the-senate-in-2026"
   }
  ],
- "discovered_at": "2026-10-25T21:07:49Z",
+ "discovered_at": "2026-10-25T21:30:02Z",
  "errors": [],
- "fetched_at": "2026-10-25T21:07:49Z",
+ "fetched_at": "2026-10-25T21:30:02Z",
  "races": [
   {
    "id": "HOUSEAKAL-26",
@@ -316,7 +316,7 @@
      "rules": "If a member of the Republican party is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
      "volume": 41849.61,
-     "volume_24h": 50.0
+     "volume_24h": 0.0
     },
     {
      "ask": 0.21,
@@ -370,7 +370,7 @@
      "id": "1279604",
      "label": "Republican Party",
      "last": 0.81,
-     "liquidity": 12439.9671,
+     "liquidity": 12427.1671,
      "party_outcome": false,
      "price": 0.775,
      "question": "Will the Republican Party win the AK-AL House seat?",
@@ -388,7 +388,7 @@
      "id": "1279607",
      "label": "Bill Hill",
      "last": 0.189,
-     "liquidity": 18849.84632,
+     "liquidity": 18949.09389,
      "party_outcome": false,
      "price": 0.19,
      "question": "Will Bill Hill win the AK-AL House seat?",
@@ -406,7 +406,7 @@
      "id": "1279605",
      "label": "Democratic Party",
      "last": 0.01,
-     "liquidity": 36080.55027,
+     "liquidity": 36168.97027,
      "party_outcome": false,
      "price": 0.025,
      "question": "Will the Democratic Party win the AK-AL House seat?",
@@ -424,7 +424,7 @@
      "id": "1279608",
      "label": "Jim McDermott",
      "last": 0.002,
-     "liquidity": 18725.65611,
+     "liquidity": 18817.84111,
      "party_outcome": false,
      "price": 0.0015,
      "question": "Will Jim McDermott win the AK-AL House seat?",
@@ -444,7 +444,7 @@
    "id": "KXHOUSERACE-CA06-26",
    "outcomes": [
     {
-     "ask": 0.954,
+     "ask": 0.956,
      "bid": 0.933,
      "cand_id": "H6CA03158",
      "id": "KXHOUSERACE-CA06-26-D",
@@ -452,7 +452,7 @@
      "last": 0.943,
      "open_interest": 8809.17,
      "prev_price": 0.939,
-     "price": 0.9435,
+     "price": 0.9445,
      "question": "Will Democratic win the House race for CA-06?",
      "result": "",
      "rules": "If the House member sworn in for CA-06 for the term beginning in 2027 is a member of the Democratic party, then the market resolves to Yes.",
@@ -505,20 +505,20 @@
    "id": "HOUSEIA1-26",
    "outcomes": [
     {
-     "ask": 0.921,
+     "ask": 0.922,
      "bid": 0.913,
      "cand_id": "H2IA02111",
      "id": "HOUSEIA1-26-D",
      "label": "Christina Bohannan",
-     "last": 0.913,
-     "open_interest": 68389.61,
+     "last": 0.921,
+     "open_interest": 68529.61,
      "prev_price": 0.913,
-     "price": 0.917,
+     "price": 0.9175,
      "question": "Will Democratic win the House race for IA-1?",
      "result": "",
      "rules": "If the House member sworn in for IA-01 for the term beginning in 2027 is a member of the Democratic party, then the market resolves to Yes.",
      "status": "active",
-     "volume": 258400.16,
+     "volume": 258709.57,
      "volume_24h": 0.0
     },
     {
@@ -597,7 +597,7 @@
      "rules": "If Todd Achilles is sworn in as a Senator of Idaho for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
      "volume": 441144.51,
-     "volume_24h": 11369.8
+     "volume_24h": 11426.05
     },
     {
      "ask": 0.002,
@@ -634,7 +634,7 @@
      "id": "630706",
      "label": "Jim Risch (R)",
      "last": 0.95,
-     "liquidity": 58827.6931,
+     "liquidity": 58115.89203,
      "party_outcome": false,
      "price": 0.9545,
      "question": "Will the Republicans win the Idaho Senate race in 2026?",
@@ -652,14 +652,14 @@
      "id": "630707",
      "label": "Todd Achilles (I)",
      "last": 0.036,
-     "liquidity": 49197.22142,
+     "liquidity": 47350.34686,
      "party_outcome": false,
      "price": 0.035,
      "question": "Will Todd Achilles win the Idaho Senate race in 2026?",
      "result": "",
      "status": "active",
      "token": "109865291951183941149765892685776097643915392898762342965012269207177841238467",
-     "volume": 140827.908128,
+     "volume": 140827.90812800004,
      "volume_24h": 163.57999999999998
     },
     {
@@ -670,7 +670,7 @@
      "id": "630705",
      "label": "Democrat",
      "last": 0.001,
-     "liquidity": 48915.18962,
+     "liquidity": 48471.97662,
      "party_outcome": false,
      "price": 0.0005,
      "question": "Will the Democrats win the Idaho Senate race in 2026?",
@@ -768,7 +768,7 @@
    "id": "SENATEMT-26",
    "outcomes": [
     {
-     "ask": 0.922,
+     "ask": 0.923,
      "bid": 0.911,
      "cand_id": "S6MT00295",
      "id": "SENATEMT-26-R",
@@ -776,7 +776,7 @@
      "last": 0.923,
      "open_interest": 180867.59,
      "prev_price": 0.923,
-     "price": 0.9165,
+     "price": 0.917,
      "question": "Will Republicans win the Senate race in Montana?",
      "result": "",
      "rules": "If a representative of the Republican party is sworn in as a Senator of Montana for the term beginning in 2027, then the market resolves to Yes.",
@@ -785,15 +785,15 @@
      "volume_24h": 4513.85
     },
     {
-     "ask": 0.084,
-     "bid": 0.083,
+     "ask": 0.083,
+     "bid": 0.082,
      "cand_id": "S6MT00287",
      "id": "SENATEMT-26-IND",
      "label": "Seth Bodnar",
      "last": 0.083,
      "open_interest": 277745.28,
      "prev_price": 0.082,
-     "price": 0.0835,
+     "price": 0.0825,
      "question": "Will Independents win the Senate race in Montana?",
      "result": "",
      "rules": "If Seth Bodnar (as an Independent) is sworn in as a Senator of Montana for the term beginning in 2027, then the market resolves to Yes.",
@@ -836,14 +836,14 @@
      "id": "630832",
      "label": "Kurt Alme (R)",
      "last": 0.92,
-     "liquidity": 97776.9529,
+     "liquidity": 95448.8367,
      "party_outcome": false,
      "price": 0.92,
      "question": "Will the Republicans win the Montana Senate race in 2026?",
      "result": "",
      "status": "active",
      "token": "102325039069045369431277041414667266705633344716966967751024692805337688459829",
-     "volume": 110780.11188500002,
+     "volume": 110780.111885,
      "volume_24h": 155.0
     },
     {
@@ -855,7 +855,7 @@
      "id": "630833",
      "label": "Independent",
      "last": 0.081,
-     "liquidity": 99817.67521,
+     "liquidity": 98796.80337,
      "party_outcome": true,
      "price": 0.074,
      "question": "Will an Independent win the Montana Senate race in 2026?",
@@ -873,7 +873,7 @@
      "id": "630831",
      "label": "Alani Bankhead (D)",
      "last": 0.001,
-     "liquidity": 47536.33075,
+     "liquidity": 48829.05159,
      "party_outcome": false,
      "price": 0.0015,
      "question": "Will the Democrats win the Montana Senate race in 2026?",
@@ -954,21 +954,21 @@
    "id": "SENATENE-26",
    "outcomes": [
     {
-     "ask": 0.76,
-     "bid": 0.75,
+     "ask": 0.75,
+     "bid": 0.74,
      "cand_id": "S6NE00129",
      "id": "SENATENE-26-R",
      "label": "Pete Ricketts",
      "last": 0.75,
-     "open_interest": 1013198.06,
+     "open_interest": 1013622.06,
      "prev_price": 0.76,
-     "price": 0.755,
+     "price": 0.745,
      "question": "Will Republicans win the Senate race in Nebraska?",
      "result": "",
      "rules": "If a representative of the Republican party is sworn in as a Senator of Nebraska for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
-     "volume": 1842117.73,
-     "volume_24h": 116310.19
+     "volume": 1846583.15,
+     "volume_24h": 120777.13
     },
     {
      "ask": 0.26,
@@ -977,15 +977,15 @@
      "id": "SENATENE-26-DOSB",
      "label": "Dan Osborn",
      "last": 0.26,
-     "open_interest": 622691.14,
+     "open_interest": 622782.55,
      "prev_price": 0.24,
      "price": 0.255,
      "question": "Will Dan Osborn (as an independent) win the Senate race in Nebraska?",
      "result": "",
      "rules": "If Dan Osborn (as an independent) is sworn in as a Senator of Nebraska for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
-     "volume": 1448912.33,
-     "volume_24h": 53579.46
+     "volume": 1449003.74,
+     "volume_24h": 53670.87
     },
     {
      "ask": 0.003,
@@ -1016,21 +1016,21 @@
    "outcomes": [
     {
      "ask": 0.75,
-     "bid": 0.73,
+     "bid": 0.74,
      "cand_id": "S6NE00129",
-     "day_change": null,
+     "day_change": 0.005,
      "id": "634892",
      "label": "Pete Ricketts (R)",
      "last": 0.75,
-     "liquidity": 283540.2317,
+     "liquidity": 303268.5285,
      "party_outcome": false,
-     "price": 0.74,
+     "price": 0.745,
      "question": "Will the Republicans win the Nebraska Senate race in 2026?",
      "result": "",
      "status": "active",
      "token": "92576281548134350814800877416860562553699794074017301653635964206220838638047",
-     "volume": 515604.858992,
-     "volume_24h": 6441.790231
+     "volume": 516294.858992,
+     "volume_24h": 7106.790231
     },
     {
      "ask": 0.26,
@@ -1041,15 +1041,15 @@
      "id": "634893",
      "label": "Independent",
      "last": 0.26,
-     "liquidity": 349737.8592,
+     "liquidity": 352887.9096,
      "party_outcome": true,
      "price": 0.255,
      "question": "Will an independent win the Nebraska Senate race in 2026?",
      "result": "",
      "status": "active",
      "token": "47975366268282823322598946778919483335780002591367838795894307024076579116518",
-     "volume": 344923.84967,
-     "volume_24h": 14953.023586
+     "volume": 345089.234286,
+     "volume_24h": 15093.408202
     },
     {
      "ask": 0.001,
@@ -1059,7 +1059,7 @@
      "id": "634891",
      "label": "Democrat",
      "last": 0.001,
-     "liquidity": 61266.54169,
+     "liquidity": 61299.33169,
      "party_outcome": false,
      "price": 0.0005,
      "question": "Will the Democrats win the Nebraska Senate race in 2026?",
@@ -1093,7 +1093,7 @@
      "rules": "If a representative of the Republican party is sworn in as a Senator of South Dakota for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
      "volume": 138455.41,
-     "volume_24h": 2243.38
+     "volume_24h": 2053.92
     },
     {
      "ask": 0.05,
@@ -1165,14 +1165,14 @@
      "id": "630939",
      "label": "Brian Bengs (I)",
      "last": 0.051,
-     "liquidity": 43979.56941,
+     "liquidity": 43982.5694,
      "party_outcome": false,
      "price": 0.045,
      "question": "Will Brian Bengs win the South Dakota Senate race in 2026?",
      "result": "",
      "status": "active",
      "token": "85091920580146708593441393469155645206377351164316133922062262386625039242645",
-     "volume": 15846.976724000002,
+     "volume": 15846.976724,
      "volume_24h": 39.216079
     },
     {
@@ -1183,7 +1183,7 @@
      "id": "630937",
      "label": "Democrat",
      "last": 0.001,
-     "liquidity": 43332.46698,
+     "liquidity": 45434.91198,
      "party_outcome": false,
      "price": 0.0015,
      "question": "Will the Democrats win the South Dakota Senate race in 2026?",
