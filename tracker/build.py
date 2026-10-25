@@ -616,7 +616,7 @@ def home_page(site):
     if p_ctrl:
         ctrl = (f'<p class="small muted">For context, Polymarket\'s “{E(p_ctrl["title"])}”: '
                 + ", ".join(f'{E(o["label"])} {pct(o.get("price"))}' for o in p_ctrl["outcomes"])
-                + f'. With the chamber this close, a few independent seats could decide which party controls it. ({a_out(p_ctrl["url"], "source", "polymarket")}, read {tm(m.mk.get("fetched_at"))})</p>')
+                + f'. ({a_out(p_ctrl["url"], "source", "polymarket")}, read {tm(m.mk.get("fetched_at"))})</p>')
     cards = []
     for c in m.candidates[:12]:
         k, p = c["venues"].get("kalshi"), c["venues"].get("polymarket")
