@@ -42,6 +42,6 @@ jobs:
             git commit -q --allow-empty -m "keep-alive: no data changed in 45 days"
             git push -q origin HEAD:main || echo "::warning::keep-alive push failed"
           fi
-          for wf in update.yml selftest.yml; do
+          for wf in update.yml selftest.yml watchdog.yml; do
             gh api -X PUT "repos/$GITHUB_REPOSITORY/actions/workflows/$wf/enable" >/dev/null || echo "::warning::could not re-enable $wf"
           done

@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import fixtures as F  # noqa: E402
-from tracker import common, fec, markets, votes  # noqa: E402
+from tracker import common, fec, markets, votes, watchdog  # noqa: E402
 
 
 class CommonTest(unittest.TestCase):
@@ -143,6 +143,14 @@ class MarketsTest(unittest.TestCase):
         older = [r for r in out if common.parse_iso(r["ts"]) < now - timedelta(days=14)]
         self.assertEqual(len(recent), 14 * 24 + 1)
         self.assertLessEqual(len(older), 17, "one point per day before the hourly window")
+
+
+class WatchdogTest(unittest.TestCase):
+    def test_age_of_live_prices(self):
+        now = datetime(2026, 10, 26, 5, 20, tzinfo=timezone.utc)
+        html = 'Markets (Kalshi, Polymarket): <time datetime="2026-10-26T00:24:40Z">x</time>'
+        self.assertEqual(watchdog.age_minutes(html, now), 295)
+        self.assertEqual(watchdog.age_minutes("no time here", now), 9999)
 
 
 class VotesTest(unittest.TestCase):

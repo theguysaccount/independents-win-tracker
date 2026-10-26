@@ -1,4 +1,4 @@
-# Hourly: reread the markets (and the FEC and Voteview files when they change), test, rebuild,
+# Twice an hour: reread the markets (and the FEC and Voteview files when they change), test, rebuild,
 # guard and publish the site, commit the data snapshot, ping IndexNow.
 # Fails safe: a source that cannot be read keeps its last good data (each page prints its own
 # as-of time); a failed test or guard stops before deploy, so the last good site stays live.
@@ -6,7 +6,9 @@ name: Update and deploy
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    # Two slots an hour, off the busy :00/:30 minutes: GitHub delays and drops scheduled runs under
+    # load, so one slot an hour can leave prices hours old. watchdog.yml is the backstop.
+    - cron: "17,47 * * * *"
   push:
     branches: [main]
     paths-ignore: ["data/**", "**.md", "docs/**"]
@@ -87,7 +89,7 @@ jobs:
             git commit -q --allow-empty -m "keep-alive: no data changed in 45 days"
             git push -q origin HEAD:main || echo "::warning::keep-alive push failed"
           fi
-          for wf in update.yml selftest.yml; do
+          for wf in update.yml selftest.yml watchdog.yml; do
             gh api -X PUT "repos/$GITHUB_REPOSITORY/actions/workflows/$wf/enable" >/dev/null || echo "::warning::could not re-enable $wf"
           done
 

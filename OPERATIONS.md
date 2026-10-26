@@ -7,19 +7,21 @@ needs to be involved. The live site is https://theguysaccount.github.io/independ
 
 | Workflow | When | What it does | How it fails safely |
 |---|---|---|---|
-| `update.yml` | Hourly at :17 UTC, on every push to `main` (code), and by hand | 1. `tracker.refresh` rereads the Kalshi and Polymarket prices for the tracked races. It HEAD-checks the FEC bulk files and the Voteview CSVs and downloads them only when they changed. It rediscovers markets every 20 hours or when the FEC file changes. 2. Runs the test suite. 3. Builds the site and share cards. 4. `tracker.guard` checks it. 5. Deploys to Pages. 6. Commits the `data/` snapshot. 7. Pings IndexNow when pages were added or removed, and daily at 09:xx UTC. 8. Keep-alive. | Each source is read on its own. A failed source keeps its last good file, and `data/status.json` records the error. Pages print each dataset's own read time, so stale numbers never pass as new. A failed test or guard stops before deploy, so the last good site stays live. Data pushes retry three times, then give up for the hour. An IndexNow failure is ignored. |
+| `update.yml` | Twice an hour at :17 and :47 UTC, on every push to `main` (code), and by hand | 1. `tracker.refresh` rereads the Kalshi and Polymarket prices for the tracked races. It HEAD-checks the FEC bulk files and the Voteview CSVs and downloads them only when they changed. It rediscovers markets every 20 hours or when the FEC file changes. 2. Runs the test suite. 3. Builds the site and share cards. 4. `tracker.guard` checks it. 5. Deploys to Pages. 6. Commits the `data/` snapshot. 7. Pings IndexNow when pages were added or removed, and daily at 09:xx UTC. 8. Keep-alive. | Each source is read on its own. A failed source keeps its last good file, and `data/status.json` records the error. Pages print each dataset's own read time, so stale numbers never pass as new. A failed test or guard stops before deploy, so the last good site stays live. Data pushes retry three times, then give up for the hour. An IndexNow failure is ignored. |
+| `watchdog.yml` | Twice an hour at :05 and :35 UTC, and by hand | Reads the market read time on the live home page. If it is more than 70 minutes old and no update is queued or running, it starts `update.yml`. Then the keep-alive. GitHub delays and drops scheduled runs under load; on 2026-10-25/26 the hourly slot fired once in five hours. | Read-only against the site. It only starts the normal update job, whose own checks still apply. |
 | `selftest.yml` | Mondays 10:23 UTC, and by hand | 1. Runs the full test suite. 2. `tracker.refresh --check-fresh` fails if a source has had no successful read in 6 h (markets) or 3 days (FEC, Voteview). 3. `tracker.selftest` fetches every sitemap URL plus assets, checks the 200s, checks candidate pages carry their sources, and checks the live market read time is under 6 h old. 4. Keep-alive. | Read-only against the site. A failure only sends GitHub's failure email to the repository owner. |
 | `test.yml` | Pull requests and pushes to non-main branches | Tests on Python 3.9 and 3.12, then a build and guard | Never deploys |
 
 **Keep-alive.** GitHub pauses scheduled workflows in public repositories after 60 days without
-repository activity. Hourly data commits normally prevent that. As a backstop, each scheduled run
-re-enables both scheduled workflows through the API (`PUT /actions/workflows/{id}/enable`). It also
+repository activity. Data commits on every update normally prevent that. As a backstop, each scheduled
+run re-enables all three scheduled workflows through the API (`PUT /actions/workflows/{id}/enable`). It also
 pushes an empty `keep-alive` commit if the last commit is older than 45 days, which can happen after
 the markets resolve and Congress is in recess.
 
 ## What to watch
 
-- **Actions tab → "Update and deploy".** A red run means the site was *not* updated that hour. The previous site is still live. Read the failing step: Tests, Guard (its log lists each problem), or Refresh.
+- **Actions tab → "Update and deploy".** A red run means the site was *not* updated that time. The previous site is still live. Read the failing step: Tests, Guard (its log lists each problem), or Refresh.
+- **"Watchdog" warnings** ("Prices were N minutes old; started Update and deploy") mean GitHub skipped scheduled update slots. Occasional warnings are normal. If one appears every hour, scheduled runs are failing to start.
 - **`data/status.json`**: per source, `ok`, `last_success`, `error`, `note`. It shows a source that keeps failing even while the site still deploys.
 - **"Weekly self-test" failures**: the live site is unreachable, a page is broken, or a source has been failing for longer than its limit.
 - **After Election Day**: markets resolve (`result: yes/no`), and cards then show "Resolved YES/NO". Discovery keeps resolved markets. Hourly reads can be reduced to daily by changing the cron to `17 9 * * *` in `update.yml` once all markets have resolved. Nothing breaks if it stays hourly.
@@ -49,4 +51,4 @@ None of these is needed for the site to work.
 
 ## Costs
 
-$0. Public repository, GitHub-hosted runners (about 2–3 minutes per hourly run), GitHub Pages and keyless public APIs.
+$0. Public repository, GitHub-hosted runners (about 1–3 minutes per update run, seconds per watchdog run), GitHub Pages and keyless public APIs.

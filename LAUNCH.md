@@ -31,7 +31,7 @@ human to send. Distribution runs on machine channels built into the product.
 
 | When | What happens without anyone |
 |---|---|
-| Every hour | Prices reread, pages rebuilt, snapshot committed |
+| Twice an hour (:17, :47) | Prices reread, pages rebuilt, snapshot committed; a watchdog (:05, :35) restarts the update if GitHub skipped it |
 | Daily 09:17 UTC | IndexNow resubmission of every URL |
 | Every 20 h | Market rediscovery (new independents appear automatically) |
 | Nightly (FEC) | New money totals once the FEC file changes |

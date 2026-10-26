@@ -8,7 +8,7 @@ official record.
 **Live:** https://theguysaccount.github.io/independents-win-tracker/
 
 - Neutral and sourced: every number shows its source and the time it was read. No endorsements.
-- Fully automated: an hourly GitHub Actions job rereads the sources, tests, rebuilds and publishes.
+- Fully automated: a GitHub Actions job rereads the sources twice an hour, tests, rebuilds and publishes, and a watchdog restarts it if GitHub skips a run.
 - No server, no keys, no cookies. Static HTML on GitHub Pages; Python standard library only.
 
 ## What's on the site
@@ -50,7 +50,7 @@ guarded for broken links, missing sources and advocacy language.
 ## Deploy
 
 Pushing to `main` builds and deploys through `.github/workflows/update.yml` (GitHub Pages,
-"GitHub Actions" source). The same workflow runs hourly. See [OPERATIONS.md](OPERATIONS.md) for
+"GitHub Actions" source). The same workflow runs twice an hour. See [OPERATIONS.md](OPERATIONS.md) for
 every job, how each one fails safely, and the keys a human can turn later (custom domain, money).
 
 ## Layout
