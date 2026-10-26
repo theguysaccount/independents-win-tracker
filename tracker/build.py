@@ -218,9 +218,11 @@ class Site:
     def __init__(self, out, site_url, cfg, model, env):
         self.out, self.url, self.cfg, self.m, self.env = out, site_url.rstrip("/"), cfg, model, env
         self.pages = []  # (path, lastmod, priority)
-        css = open(os.path.join(ROOT, "static", "style.css"), "rb").read()
-        js = open(os.path.join(ROOT, "static", "app.js"), "rb").read()
-        self.ver = hashlib.sha1(css + js).hexdigest()[:10]
+        h = hashlib.sha1()
+        for fn in ("style.css", "app.js"):
+            with open(os.path.join(ROOT, "static", fn), "rb") as f:
+                h.update(f.read())
+        self.ver = h.hexdigest()[:10]
 
     def abs(self, path):
         return f"{self.url}/{path}"
