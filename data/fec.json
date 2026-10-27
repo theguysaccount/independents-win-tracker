@@ -2065,15 +2065,15 @@
    "state": "IA"
   },
   "H4MA01091": {
-   "coh": -656404.45,
-   "cvg_end": "2026-09-30",
+   "coh": 310205.12,
+   "cvg_end": "2026-10-14",
    "debts": 575000.0,
-   "disb": 1219143.15,
+   "disb": 1288433.58,
    "district": "01",
    "ici": "C",
    "id": "H4MA01091",
    "independent": true,
-   "indiv": 49589.1,
+   "indiv": 62489.1,
    "major": false,
    "name": "Nadia Milleron",
    "name_raw": "MILLERON, NADIA D",
@@ -2084,8 +2084,8 @@
    "party_label": "No Party Affiliation",
    "pcc": "C00868927",
    "race": "MA-H-01",
-   "receipts": 549589.1,
-   "self": 500000.0,
+   "receipts": 1585489.1,
+   "self": 1523000.0,
    "state": "MA"
   },
   "H4MI10131": {
@@ -4441,15 +4441,15 @@
    "state": "CO"
   },
   "H6CT03178": {
-   "coh": 4028.0,
-   "cvg_end": "2026-06-30",
+   "coh": 67.54,
+   "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 4445.79,
+   "disb": 11243.45,
    "district": "03",
    "ici": "C",
    "id": "H6CT03178",
    "independent": false,
-   "indiv": 13648.55,
+   "indiv": 16485.75,
    "major": true,
    "name": "Christopher Lancia",
    "name_raw": "LANCIA, CHRISTOPHER JOHN MR.",
@@ -4460,7 +4460,7 @@
    "party_label": "REP",
    "pcc": "C00905125",
    "race": "CT-H-03",
-   "receipts": 14648.55,
+   "receipts": 17485.75,
    "self": 1000.0,
    "state": "CT"
   },
@@ -8017,10 +8017,10 @@
    "state": "MS"
   },
   "H6MS04259": {
-   "coh": 25121.04,
+   "coh": 20069.99,
    "cvg_end": "2026-10-14",
-   "debts": 75000.0,
-   "disb": 70705.28,
+   "debts": 100000.0,
+   "disb": 100756.33,
    "district": "04",
    "ici": "C",
    "id": "H6MS04259",
@@ -8036,8 +8036,8 @@
    "party_label": "Independent",
    "pcc": "C00937136",
    "race": "MS-H-04",
-   "receipts": 95826.32,
-   "self": 80076.35,
+   "receipts": 120826.32,
+   "self": 105076.35,
    "state": "MS"
   },
   "H6MS04275": {
@@ -10921,15 +10921,15 @@
    "state": "RI"
   },
   "H6RI01161": {
-   "coh": 61.57,
-   "cvg_end": "2026-09-30",
+   "coh": 111.57,
+   "cvg_end": "2026-10-14",
    "debts": 9350.0,
-   "disb": 13003.77,
+   "disb": 13006.17,
    "district": "01",
    "ici": "C",
    "id": "H6RI01161",
    "independent": true,
-   "indiv": 3595.34,
+   "indiv": 3647.74,
    "major": false,
    "name": "Pedro Desouza",
    "name_raw": "DESOUZA, PEDRO",
@@ -10940,7 +10940,7 @@
    "party_label": "Independent",
    "pcc": "C00951624",
    "race": "RI-H-01",
-   "receipts": 13065.34,
+   "receipts": 13117.74,
    "self": 9470.0,
    "state": "RI"
   },
@@ -12529,15 +12529,15 @@
    "state": "VA"
   },
   "H6VA07353": {
-   "coh": 23882.49,
-   "cvg_end": "2026-09-30",
+   "coh": 3659.55,
+   "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 4590.61,
+   "disb": 11167.11,
    "district": "07",
    "ici": "C",
    "id": "H6VA07353",
    "independent": true,
-   "indiv": 28473.1,
+   "indiv": 28923.1,
    "major": false,
    "name": "Alaha Ahrar",
    "name_raw": "AHRAR, ALAHA MS.",
@@ -12548,7 +12548,7 @@
    "party_label": "Independent",
    "pcc": "C00947770",
    "race": "VA-H-07",
-   "receipts": 28473.1,
+   "receipts": 28923.1,
    "self": 0.0,
    "state": "VA"
   },
@@ -17258,12 +17258,12 @@
   }
  },
  "counts": {
-  "candidates_2026": 2558,
-  "independent_filers": 130,
+  "candidates_2026": 2559,
+  "independent_filers": 131,
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-10-26T11:28:48Z",
+ "fetched_at": "2026-10-27T06:51:27Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18191,11 +18191,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Mon, 26 Oct 2026 05:40:16 GMT",
+   "last_modified": "Tue, 27 Oct 2026 05:33:34 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Mon, 26 Oct 2026 05:40:04 GMT",
+   "last_modified": "Tue, 27 Oct 2026 05:33:23 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
