@@ -1,27 +1,27 @@
 {
  "fec": {
-  "checked_at": "2026-10-29T13:04:20Z",
+  "checked_at": "2026-10-29T15:30:00Z",
   "error": "",
   "last_changed": "2026-10-29T05:51:04Z",
-  "last_success": "2026-10-29T13:04:20Z",
+  "last_success": "2026-10-29T15:30:00Z",
   "note": "FEC bulk files unchanged",
   "ok": true,
   "warnings": []
  },
  "markets": {
-  "checked_at": "2026-10-29T13:04:20Z",
+  "checked_at": "2026-10-29T15:30:00Z",
   "error": "",
-  "last_changed": "2026-10-29T13:04:20Z",
-  "last_success": "2026-10-29T13:04:20Z",
+  "last_changed": "2026-10-29T15:30:00Z",
+  "last_success": "2026-10-29T15:30:00Z",
   "note": "17 race markets (0 stale), 39 independent outcomes, 6 aggregate markets",
   "ok": true,
   "warnings": []
  },
  "votes": {
-  "checked_at": "2026-10-29T13:04:20Z",
+  "checked_at": "2026-10-29T15:30:00Z",
   "error": "",
   "last_changed": "2026-10-25T21:09:25Z",
-  "last_success": "2026-10-29T13:04:20Z",
+  "last_success": "2026-10-29T15:30:00Z",
   "note": "Voteview files unchanged",
   "ok": true,
   "warnings": []
