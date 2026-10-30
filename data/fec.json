@@ -2929,7 +2929,7 @@
    "state": "WA"
   },
   "H4WI06048": {
-   "coh": 600072.64,
+   "coh": 615524.89,
    "cvg_end": "2026-10-14",
    "debts": 139110.0,
    "disb": 1115971.85,
@@ -2937,7 +2937,7 @@
    "ici": "I",
    "id": "H4WI06048",
    "independent": false,
-   "indiv": 810335.6,
+   "indiv": 825787.85,
    "major": true,
    "name": "Glenn Grothman",
    "name_raw": "GROTHMAN, GLENN S.",
@@ -2948,7 +2948,7 @@
    "party_label": "REP",
    "pcc": "C00561597",
    "race": "WI-H-06",
-   "receipts": 1193554.78,
+   "receipts": 1209007.03,
    "self": 0.0,
    "state": "WI"
   },
@@ -10897,15 +10897,15 @@
    "state": "PA"
   },
   "H6RI01153": {
-   "coh": 1832.4,
-   "cvg_end": "2026-09-30",
+   "coh": 1465.44,
+   "cvg_end": "2026-10-14",
    "debts": 8100.0,
-   "disb": 13578.04,
+   "disb": 13970.0,
    "district": "01",
    "ici": "C",
    "id": "H6RI01153",
    "independent": false,
-   "indiv": 5260.44,
+   "indiv": 5285.44,
    "major": true,
    "name": "Kellie Keenan",
    "name_raw": "KEENAN, KELLIE ELEANOR",
@@ -10916,7 +10916,7 @@
    "party_label": "REP",
    "pcc": "C00947416",
    "race": "RI-H-01",
-   "receipts": 15410.44,
+   "receipts": 15435.44,
    "self": 8100.0,
    "state": "RI"
   },
@@ -13945,15 +13945,15 @@
    "state": "ME"
   },
   "S4MS00187": {
-   "coh": 4862.52,
-   "cvg_end": "2026-09-30",
+   "coh": 4046.64,
+   "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 105063.33,
+   "disb": 106254.1,
    "district": "00",
    "ici": "C",
    "id": "S4MS00187",
    "independent": true,
-   "indiv": 99967.01,
+   "indiv": 100267.01,
    "major": false,
    "name": "Ty Pinkins",
    "name_raw": "PINKINS, TY",
@@ -13964,7 +13964,7 @@
    "party_label": "Independent",
    "pcc": "C00830554",
    "race": "MS-S",
-   "receipts": 104310.83,
+   "receipts": 104685.72,
    "self": 0.0,
    "state": "MS"
   },
@@ -16012,7 +16012,7 @@
    "coh": 22819.8,
    "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 167719.91,
+   "disb": 167744.91,
    "district": "00",
    "ici": "O",
    "id": "S6MT00253",
@@ -16028,8 +16028,8 @@
    "party_label": "DEM",
    "pcc": "C00937201",
    "race": "MT-S",
-   "receipts": 190539.71,
-   "self": 4106.02,
+   "receipts": 190564.71,
+   "self": 4131.02,
    "state": "MT"
   },
   "S6MT00261": {
@@ -17185,7 +17185,7 @@
    "state": "ID"
   },
   "S8MA00268": {
-   "coh": 85152.41,
+   "coh": 78521.98,
    "cvg_end": "2026-10-14",
    "debts": 0.0,
    "disb": 159433.7,
@@ -17193,7 +17193,7 @@
    "ici": "C",
    "id": "S8MA00268",
    "independent": true,
-   "indiv": 234896.75,
+   "indiv": 228266.32,
    "major": false,
    "name": "Shiva Ayyadurai",
    "name_raw": "AYYADURAI, SHIVA DR",
@@ -17204,7 +17204,7 @@
    "party_label": "Independent",
    "pcc": "C00936542",
    "race": "MA-S",
-   "receipts": 245728.59,
+   "receipts": 239098.16,
    "self": 10831.84,
    "state": "MA"
   },
@@ -17263,7 +17263,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-10-29T05:51:07Z",
+ "fetched_at": "2026-10-30T06:20:49Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18191,11 +18191,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Thu, 29 Oct 2026 05:40:27 GMT",
+   "last_modified": "Fri, 30 Oct 2026 05:43:47 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Thu, 29 Oct 2026 05:40:16 GMT",
+   "last_modified": "Fri, 30 Oct 2026 05:43:35 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
