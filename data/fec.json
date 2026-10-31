@@ -8713,15 +8713,15 @@
    "state": "NJ"
   },
   "H6NJ07300": {
-   "coh": 5694.75,
+   "coh": 12245.81,
    "cvg_end": "2026-09-30",
-   "debts": 10577.61,
-   "disb": 39789.25,
+   "debts": 7941.06,
+   "disb": 44216.19,
    "district": "07",
    "ici": "C",
    "id": "H6NJ07300",
    "independent": true,
-   "indiv": 45484.0,
+   "indiv": 55263.0,
    "major": false,
    "name": "Randall Terry",
    "name_raw": "TERRY, RANDALL",
@@ -8732,7 +8732,7 @@
    "party_label": "Independent",
    "pcc": "C00949990",
    "race": "NJ-H-07",
-   "receipts": 45484.0,
+   "receipts": 56462.0,
    "self": 0.0,
    "state": "NJ"
   },
@@ -9793,15 +9793,15 @@
    "state": "NY"
   },
   "H6NY12297": {
-   "coh": 23468.52,
-   "cvg_end": "2026-06-30",
+   "coh": 13925.92,
+   "cvg_end": "2026-10-14",
    "debts": 25361.68,
-   "disb": 22799.44,
+   "disb": 23912.36,
    "district": "12",
    "ici": "O",
    "id": "H6NY12297",
    "independent": true,
-   "indiv": 20906.28,
+   "indiv": 21020.13,
    "major": false,
    "name": "Karen Ortiz",
    "name_raw": "ORTIZ, KAREN",
@@ -9812,8 +9812,8 @@
    "party_label": "Independent",
    "pcc": "C00928283",
    "race": "NY-H-12",
-   "receipts": 46267.96,
-   "self": 25361.68,
+   "receipts": 47330.11,
+   "self": 26309.98,
    "state": "NY"
   },
   "H6NY12313": {
@@ -12481,15 +12481,15 @@
    "state": "VA"
   },
   "H6VA07312": {
-   "coh": 5694.75,
+   "coh": 12245.81,
    "cvg_end": "2026-09-30",
-   "debts": 10577.61,
-   "disb": 39789.25,
+   "debts": 7941.06,
+   "disb": 44216.19,
    "district": "07",
    "ici": "C",
    "id": "H6VA07312",
    "independent": true,
-   "indiv": 45484.0,
+   "indiv": 55263.0,
    "major": false,
    "name": "Randall Terry",
    "name_raw": "TERRY, RANDALL",
@@ -12500,7 +12500,7 @@
    "party_label": "Independent",
    "pcc": "C00949990",
    "race": "VA-H-07",
-   "receipts": 45484.0,
+   "receipts": 56462.0,
    "self": 0.0,
    "state": "VA"
   },
@@ -17263,7 +17263,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-10-30T06:20:49Z",
+ "fetched_at": "2026-10-31T07:00:16Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -17800,8 +17800,8 @@
    "H6NJ07276",
    "H4NJ07131",
    "H6NJ07243",
-   "H6NJ07284",
    "H6NJ07300",
+   "H6NJ07284",
    "H4NJ07164"
   ],
   "NJ-H-08": [
@@ -18116,8 +18116,8 @@
    "H6VA07320",
    "H6VA07270",
    "H4VA07275",
-   "H6VA07239",
    "H6VA07312",
+   "H6VA07239",
    "H6VA07171",
    "H6VA07353",
    "H6VA07288"
@@ -18191,11 +18191,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Fri, 30 Oct 2026 05:43:47 GMT",
+   "last_modified": "Sat, 31 Oct 2026 05:41:04 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Fri, 30 Oct 2026 05:43:35 GMT",
+   "last_modified": "Sat, 31 Oct 2026 05:40:52 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
