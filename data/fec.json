@@ -8713,15 +8713,15 @@
    "state": "NJ"
   },
   "H6NJ07300": {
-   "coh": 12245.81,
-   "cvg_end": "2026-09-30",
+   "coh": 10069.8,
+   "cvg_end": "2026-10-14",
    "debts": 7941.06,
-   "disb": 44216.19,
+   "disb": 58842.2,
    "district": "07",
    "ici": "C",
    "id": "H6NJ07300",
    "independent": true,
-   "indiv": 55263.0,
+   "indiv": 67713.0,
    "major": false,
    "name": "Randall Terry",
    "name_raw": "TERRY, RANDALL",
@@ -8732,7 +8732,7 @@
    "party_label": "Independent",
    "pcc": "C00949990",
    "race": "NJ-H-07",
-   "receipts": 56462.0,
+   "receipts": 68912.0,
    "self": 0.0,
    "state": "NJ"
   },
@@ -12481,15 +12481,15 @@
    "state": "VA"
   },
   "H6VA07312": {
-   "coh": 12245.81,
-   "cvg_end": "2026-09-30",
+   "coh": 10069.8,
+   "cvg_end": "2026-10-14",
    "debts": 7941.06,
-   "disb": 44216.19,
+   "disb": 58842.2,
    "district": "07",
    "ici": "C",
    "id": "H6VA07312",
    "independent": true,
-   "indiv": 55263.0,
+   "indiv": 67713.0,
    "major": false,
    "name": "Randall Terry",
    "name_raw": "TERRY, RANDALL",
@@ -12500,7 +12500,7 @@
    "party_label": "Independent",
    "pcc": "C00949990",
    "race": "VA-H-07",
-   "receipts": 56462.0,
+   "receipts": 68912.0,
    "self": 0.0,
    "state": "VA"
   },
@@ -17263,7 +17263,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-10-31T07:00:16Z",
+ "fetched_at": "2026-11-01T06:52:46Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18191,11 +18191,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Sat, 31 Oct 2026 05:41:04 GMT",
+   "last_modified": "Sun, 01 Nov 2026 05:44:14 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Sat, 31 Oct 2026 05:40:52 GMT",
+   "last_modified": "Sun, 01 Nov 2026 05:44:02 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
