@@ -11784,6 +11784,30 @@
    "self": 175.48,
    "state": "UT"
   },
+  "H6UT02259": {
+   "coh": 1079.43,
+   "cvg_end": "2026-10-14",
+   "debts": 0.0,
+   "disb": 5897.86,
+   "district": "02",
+   "ici": "C",
+   "id": "H6UT02259",
+   "independent": false,
+   "indiv": 1629.0,
+   "major": false,
+   "name": "Carlton Bowen",
+   "name_raw": "BOWEN, CARLTON E",
+   "office": "H",
+   "other_loans": 0.0,
+   "pac": 0.0,
+   "party": "IAP",
+   "party_label": "IAP",
+   "pcc": "C00945329",
+   "race": "UT-H-02",
+   "receipts": 6977.29,
+   "self": 5348.29,
+   "state": "UT"
+  },
   "H6UT02424": {
    "coh": 4861.47,
    "cvg_end": "2026-10-14",
@@ -11902,6 +11926,30 @@
    "race": "UT-H-02",
    "receipts": 11605.75,
    "self": 305.75,
+   "state": "UT"
+  },
+  "H6UT02549": {
+   "coh": 1079.43,
+   "cvg_end": "2026-10-14",
+   "debts": 0.0,
+   "disb": 5897.86,
+   "district": "02",
+   "ici": "C",
+   "id": "H6UT02549",
+   "independent": false,
+   "indiv": 1629.0,
+   "major": false,
+   "name": "Carlton Bowen",
+   "name_raw": "BOWEN, CARLTON E.",
+   "office": "H",
+   "other_loans": 0.0,
+   "pac": 0.0,
+   "party": "IAP",
+   "party_label": "IAP",
+   "pcc": "C00945329",
+   "race": "UT-H-02",
+   "receipts": 6977.29,
+   "self": 5348.29,
    "state": "UT"
   },
   "H6UT04024": {
@@ -17258,12 +17306,12 @@
   }
  },
  "counts": {
-  "candidates_2026": 2559,
+  "candidates_2026": 2561,
   "independent_filers": 131,
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-01T06:52:46Z",
+ "fetched_at": "2026-11-02T07:35:59Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18077,6 +18125,8 @@
    "H6UT01160",
    "H6UT02473",
    "H6UT02531",
+   "H6UT02259",
+   "H6UT02549",
    "H4UT02395",
    "H6UT02457"
   ],
@@ -18191,11 +18241,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Sun, 01 Nov 2026 05:44:14 GMT",
+   "last_modified": "Mon, 02 Nov 2026 06:39:49 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Sun, 01 Nov 2026 05:44:02 GMT",
+   "last_modified": "Mon, 02 Nov 2026 06:39:37 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
