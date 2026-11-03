@@ -699,7 +699,7 @@
   "H2CA06259": {
    "coh": 1151201.29,
    "cvg_end": "2026-10-14",
-   "debts": 6174.7,
+   "debts": 6352.49,
    "disb": 1041581.47,
    "district": "02",
    "ici": "I",
@@ -17311,7 +17311,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-02T07:35:59Z",
+ "fetched_at": "2026-11-03T08:31:11Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18241,11 +18241,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Mon, 02 Nov 2026 06:39:49 GMT",
+   "last_modified": "Tue, 03 Nov 2026 06:40:55 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Mon, 02 Nov 2026 06:39:37 GMT",
+   "last_modified": "Tue, 03 Nov 2026 06:40:43 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
