@@ -1033,15 +1033,15 @@
    "state": "ID"
   },
   "H2LA03105": {
-   "coh": 3880.01,
-   "cvg_end": "2026-09-30",
+   "coh": 3940.01,
+   "cvg_end": "2026-10-14",
    "debts": 2350.0,
    "disb": 4101.79,
    "district": "03",
    "ici": "C",
    "id": "H2LA03105",
    "independent": true,
-   "indiv": 5033.0,
+   "indiv": 5093.0,
    "major": false,
    "name": "Tia Lebrun",
    "name_raw": "LEBRUN, TIA MARIE MRS.",
@@ -1052,7 +1052,7 @@
    "party_label": "No Party Affiliation",
    "pcc": "C00819961",
    "race": "LA-H-03",
-   "receipts": 7383.0,
+   "receipts": 7443.0,
    "self": 2350.0,
    "state": "LA"
   },
@@ -7465,15 +7465,15 @@
    "state": "KY"
   },
   "H6KY06168": {
-   "coh": 23291.49,
-   "cvg_end": "2026-04-29",
-   "debts": 97000.0,
-   "disb": 177559.98,
+   "coh": 0.0,
+   "cvg_end": "2026-05-20",
+   "debts": 0.99,
+   "disb": 210926.47,
    "district": "06",
    "ici": "O",
    "id": "H6KY06168",
    "independent": false,
-   "indiv": 73601.0,
+   "indiv": 73676.0,
    "major": true,
    "name": "David Kloiber",
    "name_raw": "KLOIBER, DAVID",
@@ -7484,8 +7484,8 @@
    "party_label": "DEM",
    "pcc": "C00906768",
    "race": "KY-H-06",
-   "receipts": 200851.47,
-   "self": 127000.0,
+   "receipts": 210926.47,
+   "self": 137000.0,
    "state": "KY"
   },
   "H6KY06176": {
@@ -8713,7 +8713,7 @@
    "state": "NJ"
   },
   "H6NJ07300": {
-   "coh": 10069.8,
+   "coh": 15378.8,
    "cvg_end": "2026-10-14",
    "debts": 7941.06,
    "disb": 58842.2,
@@ -8721,7 +8721,7 @@
    "ici": "C",
    "id": "H6NJ07300",
    "independent": true,
-   "indiv": 67713.0,
+   "indiv": 73022.0,
    "major": false,
    "name": "Randall Terry",
    "name_raw": "TERRY, RANDALL",
@@ -8732,7 +8732,7 @@
    "party_label": "Independent",
    "pcc": "C00949990",
    "race": "NJ-H-07",
-   "receipts": 68912.0,
+   "receipts": 74221.0,
    "self": 0.0,
    "state": "NJ"
   },
@@ -12529,7 +12529,7 @@
    "state": "VA"
   },
   "H6VA07312": {
-   "coh": 10069.8,
+   "coh": 15378.8,
    "cvg_end": "2026-10-14",
    "debts": 7941.06,
    "disb": 58842.2,
@@ -12537,7 +12537,7 @@
    "ici": "C",
    "id": "H6VA07312",
    "independent": true,
-   "indiv": 67713.0,
+   "indiv": 73022.0,
    "major": false,
    "name": "Randall Terry",
    "name_raw": "TERRY, RANDALL",
@@ -12548,7 +12548,7 @@
    "party_label": "Independent",
    "pcc": "C00949990",
    "race": "VA-H-07",
-   "receipts": 68912.0,
+   "receipts": 74221.0,
    "self": 0.0,
    "state": "VA"
   },
@@ -17311,7 +17311,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-03T08:31:11Z",
+ "fetched_at": "2026-11-04T11:36:44Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18165,8 +18165,8 @@
    "H6VA07296",
    "H6VA07320",
    "H6VA07270",
-   "H4VA07275",
    "H6VA07312",
+   "H4VA07275",
    "H6VA07239",
    "H6VA07171",
    "H6VA07353",
@@ -18241,11 +18241,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Tue, 03 Nov 2026 06:40:55 GMT",
+   "last_modified": "Wed, 04 Nov 2026 06:40:37 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Tue, 03 Nov 2026 06:40:43 GMT",
+   "last_modified": "Wed, 04 Nov 2026 06:40:25 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }

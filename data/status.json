@@ -1,27 +1,27 @@
 {
  "fec": {
-  "checked_at": "2026-11-04T03:19:28Z",
+  "checked_at": "2026-11-04T11:36:41Z",
   "error": "",
-  "last_changed": "2026-11-03T08:31:10Z",
-  "last_success": "2026-11-04T03:19:28Z",
-  "note": "FEC bulk files unchanged",
+  "last_changed": "2026-11-04T11:36:41Z",
+  "last_success": "2026-11-04T11:36:41Z",
+  "note": "120 independent filers listed",
   "ok": true,
   "warnings": []
  },
  "markets": {
-  "checked_at": "2026-11-04T03:19:28Z",
+  "checked_at": "2026-11-04T11:36:41Z",
   "error": "",
-  "last_changed": "2026-11-04T03:19:28Z",
-  "last_success": "2026-11-04T03:19:28Z",
-  "note": "17 race markets (0 stale), 39 independent outcomes, 6 aggregate markets",
+  "last_changed": "2026-11-04T11:36:41Z",
+  "last_success": "2026-11-04T11:36:41Z",
+  "note": "kalshi discovery: 10 events; polymarket discovery: 28 events; 38 race markets (0 stale), 101 independent outcomes, 6 aggregate markets",
   "ok": true,
   "warnings": []
  },
  "votes": {
-  "checked_at": "2026-11-04T03:19:28Z",
+  "checked_at": "2026-11-04T11:36:41Z",
   "error": "",
   "last_changed": "2026-10-25T21:09:25Z",
-  "last_success": "2026-11-04T03:19:28Z",
+  "last_success": "2026-11-04T11:36:41Z",
   "note": "Voteview files unchanged",
   "ok": true,
   "warnings": []
