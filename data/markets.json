@@ -4,21 +4,21 @@
    "id": "KXINDCOUNT-27JAN03",
    "outcomes": [
     {
-     "ask": 0.51,
+     "ask": 0.4,
      "bid": 0.04,
      "id": "KXINDCOUNT-27JAN03-AL1",
      "label": "At least 1",
      "last": 0.03,
      "open_interest": 606.9,
-     "prev_price": 0.48,
+     "prev_price": 0.39,
      "price": 0.03,
      "question": "Will the number of candidates unaffiliated with a political party elected to U.S. House or Senate seats be at least 1 in the 2026 U.S. congressional elections for the 120th Congress?",
      "result": "",
      "volume": 933.34,
-     "volume_24h": 102.72
+     "volume_24h": 97.72
     },
     {
-     "ask": 0.56,
+     "ask": 0.98,
      "bid": 0.04,
      "id": "KXINDCOUNT-27JAN03-AL2",
      "label": "At least 2",
@@ -32,7 +32,7 @@
      "volume_24h": 0.0
     },
     {
-     "ask": 0.55,
+     "ask": 0.85,
      "bid": 0.03,
      "id": "KXINDCOUNT-27JAN03-AL3",
      "label": "At least 3",
@@ -46,7 +46,7 @@
      "volume_24h": 0.0
     },
     {
-     "ask": 0.94,
+     "ask": 0.45,
      "bid": 0.02,
      "id": "KXINDCOUNT-27JAN03-AL4",
      "label": "At least 4",
@@ -70,31 +70,31 @@
    "outcomes": [
     {
      "ask": 0.02,
-     "bid": 0.01,
+     "bid": 0.0,
      "id": "KXISENATEWON-26NOV03-AL1",
      "label": "At least 1",
      "last": 0.02,
      "open_interest": 7296.74,
-     "prev_price": 0.06,
-     "price": 0.015,
+     "prev_price": 0.04,
+     "price": 0.01,
      "question": "Will the number of U.S. Senate seats won by candidates unaffiliated with a political party be at least 1 in the 2026 U.S. Senate elections?",
      "result": "",
      "volume": 12918.63,
-     "volume_24h": 4016.36
+     "volume_24h": 3991.36
     },
     {
-     "ask": 0.01,
+     "ask": 0.02,
      "bid": 0.0,
      "id": "KXISENATEWON-26NOV03-AL2",
      "label": "At least 2",
      "last": 0.01,
      "open_interest": 6965.37,
-     "prev_price": 0.02,
-     "price": 0.005,
+     "prev_price": 0.01,
+     "price": 0.01,
      "question": "Will the number of U.S. Senate seats won by candidates unaffiliated with a political party be at least 2 in the 2026 U.S. Senate elections?",
      "result": "",
      "volume": 20659.6,
-     "volume_24h": 1186.17
+     "volume_24h": 1170.17
     },
     {
      "ask": 0.01,
@@ -120,28 +120,28 @@
    "id": "KXIHOUSEWON-26NOV03",
    "outcomes": [
     {
-     "ask": 0.11,
-     "bid": 0.07,
+     "ask": 0.12,
+     "bid": 0.0,
      "id": "KXIHOUSEWON-26NOV03-AL1",
      "label": "At least 1",
-     "last": 0.11,
-     "open_interest": 3203.65,
+     "last": 0.07,
+     "open_interest": 3208.65,
      "prev_price": 0.06,
-     "price": 0.09,
+     "price": 0.07,
      "question": "Will the number of U.S. House seats won by candidates unaffiliated with a political party be at least 1 in the 2026 U.S. House elections?",
      "result": "",
-     "volume": 15587.43,
-     "volume_24h": 492.23
+     "volume": 15592.43,
+     "volume_24h": 497.23
     },
     {
      "ask": 0.02,
-     "bid": 0.01,
+     "bid": 0.0,
      "id": "KXIHOUSEWON-26NOV03-AL2",
      "label": "At least 2",
      "last": 0.02,
      "open_interest": 3426.02,
      "prev_price": 0.01,
-     "price": 0.015,
+     "price": 0.01,
      "question": "Will the number of U.S. House seats won by candidates unaffiliated with a political party be at least 2 in the 2026 U.S. House elections?",
      "result": "",
      "volume": 7965.75,
@@ -171,18 +171,18 @@
    "id": "KXUSINDEPENDENTCONGRESS-26NOV03",
    "outcomes": [
     {
-     "ask": 0.38,
-     "bid": 0.036,
+     "ask": 0.43,
+     "bid": 0.01,
      "id": "KXUSINDEPENDENTCONGRESS-26NOV03",
      "label": "Yes",
      "last": 0.16,
      "open_interest": 3409.27,
-     "prev_price": 0.031,
+     "prev_price": 0.03,
      "price": 0.16,
      "question": "Will any independent or third-party candidate win an election in the U.S. House or Senate in 2026?",
      "result": "",
      "volume": 11339.54,
-     "volume_24h": 676.94
+     "volume_24h": 673.6
     }
    ],
    "series": "KXUSINDEPENDENTCONGRESS",
@@ -195,47 +195,47 @@
    "outcomes": [
     {
      "ask": 0.95,
-     "bid": 0.78,
-     "day_change": 0.57,
+     "bid": 0.8,
+     "day_change": 0.3,
      "id": "4882440",
      "label": "0",
-     "last": 0.92,
-     "liquidity": 230.4321,
-     "price": 0.865,
+     "last": 0.78,
+     "liquidity": 249.5507,
+     "price": 0.875,
      "question": "Will 0 Independents be elected to Congress in 2026?",
      "result": "",
      "token": "3873573133304725058821567885218502869709710914437915482052014711492627476615",
-     "volume": 11844.13184,
-     "volume_24h": 393.732199
+     "volume": 11845.13184,
+     "volume_24h": 125.242199
     },
     {
-     "ask": 0.257,
-     "bid": 0.006,
-     "day_change": -0.3785,
+     "ask": 0.226,
+     "bid": 0.034,
+     "day_change": 0.119,
      "id": "4882441",
      "label": "1",
      "last": 0.38,
-     "liquidity": 73.34323,
-     "price": 0.1315,
+     "liquidity": 319.37205,
+     "price": 0.13,
      "question": "Will 1 Independent be elected to Congress in 2026?",
      "result": "",
      "token": "11024737243283509353487217755179556143471151973689472593578601757208531976589",
-     "volume": 3023.5055899999993,
+     "volume": 3023.5055899999998,
      "volume_24h": 30.95925
     },
     {
      "ask": 0.03,
      "bid": 0.01,
-     "day_change": -0.115,
+     "day_change": -0.05,
      "id": "4882442",
      "label": "2",
      "last": 0.14,
-     "liquidity": 10083.59241,
+     "liquidity": 10226.81374,
      "price": 0.02,
      "question": "Will 2 Independents be elected to Congress in 2026?",
      "result": "",
      "token": "96722805096217098567287748176151739276255265226462867280409354202439768906620",
-     "volume": 752.471487,
+     "volume": 752.4714870000001,
      "volume_24h": 29.00935
     },
     {
@@ -288,8 +288,8 @@
      "question": "Will the Democratic Party control the Senate after the 2026 Midterm elections?",
      "result": "yes",
      "token": "113287701564209339913693347405685749986285999146352375265161592243948562084773",
-     "volume": 17129861.088641,
-     "volume_24h": 149790.73000000007
+     "volume": 17129861.088641003,
+     "volume_24h": null
     },
     {
      "ask": 0.001,
@@ -303,8 +303,8 @@
      "question": "Will the Republican Party control the Senate after the 2026 Midterm elections?",
      "result": "no",
      "token": "51939490109676186832507970701169130490548061087912630009168726706475001411420",
-     "volume": 14333086.447599,
-     "volume_24h": 6731.92
+     "volume": 14333086.447598998,
+     "volume_24h": null
     },
     {
      "ask": 1.0,
@@ -419,44 +419,44 @@
  ],
  "discovered_at": "2026-11-05T07:26:11Z",
  "errors": [],
- "fetched_at": "2026-11-05T07:26:11Z",
+ "fetched_at": "2026-11-05T12:09:33Z",
  "races": [
   {
    "id": "HOUSEAKAL-26",
    "outcomes": [
     {
-     "ask": 0.922,
-     "bid": 0.918,
+     "ask": 0.94,
+     "bid": 0.93,
      "cand_id": "H2AK01083",
      "id": "HOUSEAKAL-26-R",
      "label": "Nick Begich III",
-     "last": 0.922,
-     "open_interest": 102777.54,
-     "prev_price": 0.85,
-     "price": 0.92,
+     "last": 0.94,
+     "open_interest": 102348.14,
+     "prev_price": 0.87,
+     "price": 0.935,
      "question": "Will Republican win the House race for AK-AL?",
      "result": "",
      "rules": "If a member of the Republican party is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
-     "volume": 182784.32,
-     "volume_24h": 87214.21
+     "volume": 185382.85,
+     "volume_24h": 75643.46
     },
     {
      "ask": 0.07,
-     "bid": 0.06,
+     "bid": 0.05,
      "cand_id": "H6AK01092",
      "id": "HOUSEAKAL-26-BHIL",
      "label": "Bill Hill",
-     "last": 0.06,
-     "open_interest": 51992.14,
-     "prev_price": 0.18,
-     "price": 0.065,
+     "last": 0.05,
+     "open_interest": 51853.58,
+     "prev_price": 0.13,
+     "price": 0.06,
      "question": "Will Bill Hill win the House race for AK-AL?",
      "result": "",
      "rules": "If Bill Hill is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
-     "volume": 85829.53,
-     "volume_24h": 47078.26
+     "volume": 88505.36,
+     "volume_24h": 40163.51
     },
     {
      "ask": 0.006,
@@ -464,16 +464,16 @@
      "cand_id": null,
      "id": "HOUSEAKAL-26-D",
      "label": "Eric Hafner",
-     "last": 0.004,
-     "open_interest": 45610.13,
+     "last": 0.007,
+     "open_interest": 54130.26,
      "prev_price": 0.001,
      "price": 0.003,
      "question": "Will Democratic win the House race for AK-AL?",
      "result": "",
      "rules": "If a member of the Democratic party is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
-     "volume": 74777.18,
-     "volume_24h": 745.71
+     "volume": 83297.31,
+     "volume_24h": 1150.38
     }
    ],
    "race": "AK-H-00",
@@ -486,40 +486,40 @@
    "id": "ak-al-house-election-winner",
    "outcomes": [
     {
-     "ask": 0.92,
-     "bid": 0.91,
+     "ask": 0.942,
+     "bid": 0.941,
      "cand_id": null,
-     "day_change": 0.005,
+     "day_change": 0.1015,
      "id": "1279604",
      "label": "Republican Party",
-     "last": 0.93,
-     "liquidity": 17951.296,
+     "last": 0.942,
+     "liquidity": 36753.4407,
      "party_outcome": false,
-     "price": 0.915,
+     "price": 0.9415,
      "question": "Will the Republican Party win the AK-AL House seat?",
      "result": "",
      "status": "active",
      "token": "55824536479051011400121423796079002447209373774987169287762599768443101947717",
-     "volume": 47955.049660000004,
-     "volume_24h": 16182.144023
+     "volume": 49992.802314,
+     "volume_24h": 16901.374092
     },
     {
-     "ask": 0.052,
-     "bid": 0.049,
+     "ask": 0.047,
+     "bid": 0.043,
      "cand_id": "H6AK01092",
-     "day_change": -0.038,
+     "day_change": -0.1115,
      "id": "1279607",
      "label": "Bill Hill",
-     "last": 0.06,
-     "liquidity": 27700.39465,
+     "last": 0.044,
+     "liquidity": 61982.22895,
      "party_outcome": false,
-     "price": 0.0505,
+     "price": 0.045,
      "question": "Will Bill Hill win the AK-AL House seat?",
      "result": "",
      "status": "active",
      "token": "25264395884794585041068738174790155913872374353541552562714054259339230907354",
-     "volume": 20545.571958000004,
-     "volume_24h": 11407.460367
+     "volume": 21011.819089,
+     "volume_24h": 10830.195530999998
     },
     {
      "ask": 0.001,
@@ -529,15 +529,15 @@
      "id": "1279605",
      "label": "Democratic Party",
      "last": 0.028,
-     "liquidity": 17420.79023,
+     "liquidity": 17305.02532,
      "party_outcome": false,
      "price": 0.0005,
      "question": "Will the Democratic Party win the AK-AL House seat?",
      "result": "",
      "status": "active",
      "token": "106387119478622283441026286722849456868957395499329392203969838246317853715637",
-     "volume": 37169.752442000005,
-     "volume_24h": 122.2
+     "volume": 37170.312442,
+     "volume_24h": 122.76
     },
     {
      "ask": 0.001,
@@ -547,7 +547,7 @@
      "id": "1279608",
      "label": "Jim McDermott",
      "last": 0.002,
-     "liquidity": 13241.21302,
+     "liquidity": 17001.16402,
      "party_outcome": false,
      "price": 0.0005,
      "question": "Will Jim McDermott win the AK-AL House seat?",
@@ -1259,7 +1259,7 @@
      "status": "closed",
      "token": "23550083646669959729728201378229661225715650257894963073625400004845620304219",
      "volume": 16052.190608,
-     "volume_24h": 350.87
+     "volume_24h": 330.87
     },
     {
      "ask": 0.001,
@@ -1277,7 +1277,7 @@
      "status": "closed",
      "token": "62491560192300925016006825356673955645964622215173240786258105045362720885143",
      "volume": 16755.114204,
-     "volume_24h": 672.637
+     "volume_24h": 647.14
     },
     {
      "ask": 1.0,
@@ -2352,7 +2352,7 @@
      "status": "closed",
      "token": "81505692847657373092454383020575585110499837274340613322588228385158919526454",
      "volume": 51593.990567,
-     "volume_24h": 40.0
+     "volume_24h": null
     },
     {
      "ask": 1.0,
@@ -2746,8 +2746,8 @@
      "result": "yes",
      "status": "closed",
      "token": "6756779810577885828704276397389282544084821591107025125954859235939281991675",
-     "volume": 317690.03304199997,
-     "volume_24h": 5.2
+     "volume": 317690.0330420001,
+     "volume_24h": null
     },
     {
      "ask": 0.001,
@@ -4082,7 +4082,7 @@
      "rules": "If a representative of the Republican party is sworn in as a Senator of Montana for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 1371249.66,
-     "volume_24h": 915.99
+     "volume_24h": 0.0
     },
     {
      "ask": 1.0,
@@ -4099,7 +4099,7 @@
      "rules": "If a representative of the Democratic party is sworn in as a Senator of Montana for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 447399.91,
-     "volume_24h": 915.99
+     "volume_24h": 0.0
     },
     {
      "ask": 1.0,
@@ -4116,7 +4116,7 @@
      "rules": "If Seth Bodnar (as an Independent) is sworn in as a Senator of Montana for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 1259201.19,
-     "volume_24h": 10085.73
+     "volume_24h": 0.0
     }
    ],
    "race": "MT-S",
@@ -4144,7 +4144,7 @@
      "status": "closed",
      "token": "102325039069045369431277041414667266705633344716966967751024692805337688459829",
      "volume": 552031.19395,
-     "volume_24h": 18023.14
+     "volume_24h": null
     },
     {
      "ask": 0.001,
@@ -4181,7 +4181,7 @@
      "status": "closed",
      "token": "29340710087203628054916881063653310634997647642374537159652441277893390730162",
      "volume": 215423.07926499998,
-     "volume_24h": 8619.72
+     "volume_24h": null
     },
     {
      "ask": 1.0,
@@ -4381,14 +4381,14 @@
      "label": "Mike Flood",
      "last": 0.992,
      "open_interest": 48997.22,
-     "prev_price": 0.92,
+     "prev_price": 0.96,
      "price": 1.0,
      "question": "Will Republican win the House race for NE-01?",
      "result": "yes",
      "rules": "If the House member sworn in for NE-01 for the term beginning in 2027 is a member of the Republican party, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 91415.43,
-     "volume_24h": 9180.11
+     "volume_24h": 5218.08
     },
     {
      "ask": 1.0,
@@ -4398,14 +4398,14 @@
      "label": "Chris Backemeyer",
      "last": 0.001,
      "open_interest": 37636.2,
-     "prev_price": 0.035,
+     "prev_price": 0.003,
      "price": 0.0,
      "question": "Will Democratic win the House race for NE-01?",
      "result": "no",
      "rules": "If the House member sworn in for NE-01 for the term beginning in 2027 is a member of the Democratic party, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 192297.88,
-     "volume_24h": 10909.85
+     "volume_24h": 4364.48
     },
     {
      "ask": 1.0,
@@ -4450,7 +4450,7 @@
      "status": "closed",
      "token": "64853111116330838051751165150694507558361720425724447545257603093762483782268",
      "volume": 33851.467862000005,
-     "volume_24h": 4449.355734
+     "volume_24h": 3028.317651
     },
     {
      "ask": 0.001,
@@ -4468,7 +4468,7 @@
      "status": "closed",
      "token": "58026372820277754331218689892661928684288719263230251620770601499788385725923",
      "volume": 44345.766438000006,
-     "volume_24h": 5307.616773
+     "volume_24h": 4473.432573
     },
     {
      "ask": 1.0,
@@ -4596,14 +4596,14 @@
      "label": "Pete Ricketts",
      "last": 0.999,
      "open_interest": 2946534.71,
-     "prev_price": 0.997,
+     "prev_price": 0.999,
      "price": 1.0,
      "question": "Will Republicans win the Senate race in Nebraska?",
      "result": "yes",
      "rules": "If a representative of the Republican party is sworn in as a Senator of Nebraska for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 7609942.15,
-     "volume_24h": 561204.67
+     "volume_24h": 0.0
     },
     {
      "ask": 1.0,
@@ -4620,7 +4620,7 @@
      "rules": "If a representative of the Democratic party is sworn in as a Senator of Nebraska for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 1179237.68,
-     "volume_24h": 117701.13
+     "volume_24h": 0.0
     },
     {
      "ask": 1.0,
@@ -4630,14 +4630,14 @@
      "label": "Dan Osborn",
      "last": 0.001,
      "open_interest": 4750191.48,
-     "prev_price": 0.007,
+     "prev_price": 0.001,
      "price": 0.0,
      "question": "Will Dan Osborn (as an independent) win the Senate race in Nebraska?",
      "result": "no",
      "rules": "If Dan Osborn (as an independent) is sworn in as a Senator of Nebraska for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 10327049.22,
-     "volume_24h": 634114.73
+     "volume_24h": 0.0
     }
    ],
    "race": "NE-S",
@@ -4665,7 +4665,7 @@
      "status": "closed",
      "token": "92576281548134350814800877416860562553699794074017301653635964206220838638047",
      "volume": 2317053.153044,
-     "volume_24h": 24458.559999999998
+     "volume_24h": null
     },
     {
      "ask": 0.001,
@@ -4701,8 +4701,8 @@
      "result": "no",
      "status": "closed",
      "token": "47975366268282823322598946778919483335780002591367838795894307024076579116518",
-     "volume": 1789086.281477,
-     "volume_24h": 17623.66
+     "volume": 1789086.2814769999,
+     "volume_24h": null
     },
     {
      "ask": 1.0,
