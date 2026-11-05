@@ -17311,7 +17311,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-04T11:36:44Z",
+ "fetched_at": "2026-11-05T07:26:12Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18241,11 +18241,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Wed, 04 Nov 2026 06:40:37 GMT",
+   "last_modified": "Thu, 05 Nov 2026 06:40:13 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Wed, 04 Nov 2026 06:40:25 GMT",
+   "last_modified": "Thu, 05 Nov 2026 06:40:00 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
