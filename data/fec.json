@@ -769,10 +769,10 @@
    "state": "CA"
   },
   "H2FL03197": {
-   "coh": 36887.88,
-   "cvg_end": "2026-07-29",
-   "debts": 50000.0,
-   "disb": 13115.12,
+   "coh": -12011.0,
+   "cvg_end": "2026-09-30",
+   "debts": 0.0,
+   "disb": 22454.0,
    "district": "06",
    "ici": "C",
    "id": "H2FL03197",
@@ -5305,15 +5305,15 @@
    "state": "FL"
   },
   "H6FL16117": {
-   "coh": 28868.14,
-   "cvg_end": "2026-07-29",
-   "debts": 46000.0,
-   "disb": 56687.23,
+   "coh": 0.0,
+   "cvg_end": "2026-10-01",
+   "debts": 0.0,
+   "disb": 86175.37,
    "district": "16",
    "ici": "O",
    "id": "H6FL16117",
    "independent": false,
-   "indiv": 33481.29,
+   "indiv": 34101.29,
    "major": true,
    "name": "Jonathan Harris",
    "name_raw": "HARRIS, JONATHAN",
@@ -5324,7 +5324,7 @@
    "party_label": "DEM",
    "pcc": "C00904896",
    "race": "FL-H-16",
-   "receipts": 85555.37,
+   "receipts": 86175.37,
    "self": 52074.08,
    "state": "FL"
   },
@@ -6458,7 +6458,7 @@
   },
   "H6FL27106": {
    "coh": 1328.07,
-   "cvg_end": "2026-06-30",
+   "cvg_end": "2026-09-30",
    "debts": 0.0,
    "disb": 28839.0,
    "district": "22",
@@ -12714,7 +12714,7 @@
    "pac": 0.0,
    "party": "DEM",
    "party_label": "DEM",
-   "pcc": "C00932756",
+   "pcc": "C00964593",
    "race": "VA-H-08",
    "receipts": 266858.81,
    "self": 111815.28,
@@ -16945,15 +16945,15 @@
    "state": "TX"
   },
   "S6TX00495": {
-   "coh": 955.76,
-   "cvg_end": "2026-06-30",
+   "coh": 1435.7,
+   "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 8368.73,
+   "disb": 17363.76,
    "district": "00",
    "ici": "C",
    "id": "S6TX00495",
    "independent": true,
-   "indiv": 3580.51,
+   "indiv": 10551.17,
    "major": false,
    "name": "Jade Simmons",
    "name_raw": "SIMMONS, JADE",
@@ -16964,8 +16964,8 @@
    "party_label": "Independent",
    "pcc": "C00923201",
    "race": "TX-S",
-   "receipts": 9324.49,
-   "self": 5743.98,
+   "receipts": 18959.79,
+   "self": 8408.62,
    "state": "TX"
   },
   "S6TX00511": {
@@ -17311,7 +17311,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-05T07:26:12Z",
+ "fetched_at": "2026-11-06T08:28:04Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18110,11 +18110,11 @@
    "S4TX00722",
    "S6TX00511",
    "S6TX00412",
+   "S6TX00495",
    "S4TX00888",
    "S6TX00586",
    "S6TX00362",
    "S0TX00365",
-   "S6TX00495",
    "S6TX00396",
    "S6TX00636",
    "S6TX00545"
@@ -18241,11 +18241,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Thu, 05 Nov 2026 06:40:13 GMT",
+   "last_modified": "Fri, 06 Nov 2026 06:39:37 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Thu, 05 Nov 2026 06:40:00 GMT",
+   "last_modified": "Fri, 06 Nov 2026 06:39:25 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
