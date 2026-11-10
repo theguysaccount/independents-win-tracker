@@ -913,7 +913,7 @@ def results_page(site):
 {aggregate_cards(site)}
 {control_line(site)}
 <p class="small muted">Method: <a href="../../methodology/#results">how results are shown</a>. Corrections: <a href="https://github.com/{E(site.cfg['site']['repo'])}/issues" rel="noopener">open an issue</a>.</p>"""
-    site.page("results/2026/", title, desc, body, nav="candidates/", crumbs=[("Results", None), ("2026", None)], priority="0.9")
+    site.page("results/2026/", title, desc, body, nav="results/2026/", crumbs=[("Results", None), ("2026", None)], priority="0.9")
 
 
 def home_pre(site):
