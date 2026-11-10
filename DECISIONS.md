@@ -26,6 +26,21 @@ D12. **No gendered pronouns in generated text.** Templates use names or "the mem
 
 D13. **Embeds and share.** Each candidate and member gets an SVG badge. Share cards are 1200×630 PNGs rendered by headless Chrome on the runner, with a committed fallback. Share buttons are plain intent links, and nothing is posted.
 
+D14. **The site switches phases by date (Nov. 10, 2026).** No one has to touch it.
+- **Pre:** odds.
+- **Results** (from 06:00 UTC on Nov. 4, when the last polls closed): results lead, and a permanent `/results/2026/` page is built.
+- **Archive** (from the 120th Congress convening, Jan. 3, 2027): the party-line index leads.
+
+Dates are in `config/tracker.json` → `phases`, and tests cover all three phases.
+
+D15. **A result is a market's own resolution, never ours.**
+- Kalshi: `result`, with `settlement_ts`.
+- Polymarket: the outcome once closed with `umaResolutionStatus: resolved`. A proposed or disputed resolution stays pending.
+
+Unresolved markets show their last price labeled "not resolved". "Race settled for" lists only outcomes a market resolved YES. Each row links to the state's official results (`official_results` in the config, checked 2026-11-10).
+
+D16. **Placeholder outcomes never name anyone (bug fixed 2026-11-10).** At resolution Polymarket also closed its placeholder rows ("Other", "Person B", "A"). The old parser read "Other" as "the independent", which created 21 wrong candidate pages (for example, linking Kshama Sawant, who was not on the November ballot, to WA-09's market). Only an exact "Independent" outcome can now stand for the race's single serious independent. Placeholders are dropped from both parsing and display, and the model ignores them even in older data files.
+
 ## Open questions for Jack (none block v1)
 1. Is `independentsday.com` yours? It's registered at GoDaddy, and your portfolio is at Namecheap. If yes, it is the natural domain.
 2. Should state races (governor) be added with a hand-checked list?

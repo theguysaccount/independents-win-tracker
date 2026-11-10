@@ -66,7 +66,28 @@ def card_default():
 <div class="box"><div class="k">Votes</div><div class="v">Every member</div></div></div>"""
 
 
+def _outcome_text(v):
+    o = v["o"]
+    if o.get("result") in ("yes", "no"):
+        return "Resolved " + o["result"].upper()
+    return pct(o.get("price"))
+
+
 def card_home(model, asof):
+    if model.phase == "archive":
+        return card_party_line()
+    if model.post:
+        items = []
+        waiting = [c for c in model.candidates if model.cand_status(c) in ("pending", "partial")]
+        done = [c for c in model.candidates if model.cand_status(c) == "resolved"]
+        for c in (waiting + done)[:4]:
+            v = c["venues"].get("kalshi") or c["venues"].get("polymarket")
+            text = _outcome_text(v) + ("" if v["o"].get("result") else " · pending")
+            items.append(f'<div class="li"><span>{E(c["display"])} <b>I-{E(c["state"])}</b></span><span>{E(text)}</span></div>')
+        return f"""<div class="top"><i></i>Independents Tracker</div>
+<h1 style="font-size:52px;margin-top:22px">2026 results: the independents</h1>
+<div class="list">{''.join(items)}</div>
+<div class="foot">Market resolutions (Kalshi, else Polymarket) as of {E(asof)} · {len(done)} resolved, {len(waiting)} pending · plus party-line scores for Congress</div>"""
     items = []
     for c in model.candidates[:4]:
         v = c["venues"].get("kalshi") or c["venues"].get("polymarket")
@@ -78,20 +99,20 @@ def card_home(model, asof):
 <div class="foot">Kalshi implied chance where listed, else Polymarket · as of {E(asof)}</div>"""
 
 
-def card_candidate(c, asof):
+def card_candidate(c, asof, post=False):
     from .build import fmt_date
     k, p = c["venues"].get("kalshi"), c["venues"].get("polymarket")
     boxes = []
     if k:
-        boxes.append(f'<div class="box"><div class="k">Kalshi</div><div class="v">{pct(k["o"].get("price"))}</div></div>')
+        boxes.append(f'<div class="box"><div class="k">Kalshi</div><div class="v" style="font-size:{44 if k["o"].get("result") else 58}px">{_outcome_text(k)}</div></div>')
     if p:
-        boxes.append(f'<div class="box"><div class="k">Polymarket{" · any independent" if p["kind"] == "party" else ""}</div><div class="v">{pct(p["o"].get("price"))}</div></div>')
+        boxes.append(f'<div class="box"><div class="k">Polymarket{" · any independent" if p["kind"] == "party" else ""}</div><div class="v" style="font-size:{44 if p["o"].get("result") else 58}px">{_outcome_text(p)}</div></div>')
     boxes.append(f'<div class="box"><div class="k">Raised (FEC)</div><div class="v">{money(c["receipts"])}</div></div>')
     return f"""<div class="top"><i></i>Independents Tracker</div>
 <h1>{E(c['display'])}</h1>
 <div class="sub">{E(c['party_label'])} · {E(race_label(c['state'], c['office'], c['district']))} · 2026</div>
 <div class="row">{''.join(boxes)}</div>
-<div class="foot">Implied chance of winning, as of {E(asof)}. Money through {E(fmt_date(c['cvg_end']))}. Not an endorsement.</div>"""
+<div class="foot">{'Market resolutions and last prices' if post else 'Implied chance of winning'}, as of {E(asof)}. Money through {E(fmt_date(c['cvg_end']))}. Not an endorsement.</div>"""
 
 
 def card_party_line():
@@ -107,7 +128,7 @@ def run(site_dir, model):
     from .build import fmt_date, fmt_dt  # noqa: F401
     asof = fmt_dt(model.mk.get("fetched_at"))
     jobs = [("home.png", card_home(model, asof)), ("party-line.png", card_party_line())]
-    jobs += [(f"c-{c['slug']}.png", card_candidate(c, asof)) for c in model.candidates]
+    jobs += [(f"c-{c['slug']}.png", card_candidate(c, asof, model.post)) for c in model.candidates]
     chrome = find_chrome()
     made = 0
     for name, html in jobs:

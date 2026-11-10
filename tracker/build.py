@@ -20,7 +20,7 @@ from html import escape
 from . import graphics
 from .common import (DATA, ROOT, STATES, iso, load_config, money, now_utc, ordinal, parse_iso, pct,
                      person_name, race_label, read_json, slugify, surname)
-from .markets import read_history
+from .markets import _PARTY_OUTCOME, _PLACEHOLDER, outcome_name, read_history
 
 E = escape
 PARTY_SHORT = {"D": "D", "R": "R", "I": "I"}
@@ -98,7 +98,52 @@ class Model:
         self.status, self.hist, self.now = status or {}, hist, now
         self.members = (self.votes or {}).get("members", [])
         self.member_by_fec = {fid: m for m in self.members for fid in m.get("fec_ids", [])}
+        # The site's framing follows the calendar by itself: "pre" (odds), "results" (from the close of
+        # the last polls), "archive" (from the day the next Congress convenes: the party-line index leads).
+        eday = date.fromisoformat(cfg["site"]["election_date"])
+        ph = cfg.get("phases", {})
+        self.results_from = parse_iso(ph.get("results_from")) or datetime(eday.year, eday.month, eday.day, 6, tzinfo=timezone.utc) + timedelta(days=1)
+        self.archive_from = parse_iso(ph.get("archive_from"))
+        if self.archive_from and now >= self.archive_from:
+            self.phase = "archive"
+        elif now >= self.results_from:
+            self.phase = "results"
+        else:
+            self.phase = "pre"
+        self.post = self.phase != "pre"
         self.candidates = self._candidates()
+
+    # -- results after Election Day
+    def cand_status(self, c):
+        """'resolved' (every market that lists the candidate has resolved), 'partial', 'pending' or 'none'."""
+        rs = [v["o"].get("result") for v in c["venues"].values()]
+        if not rs:
+            return "none"
+        if all(r in ("yes", "no") for r in rs):
+            return "resolved"
+        return "partial" if any(r in ("yes", "no") for r in rs) else "pending"
+
+    def settled_for(self, race):
+        """[(source, label, record, outcome)] for each market outcome in the race that resolved YES."""
+        out = []
+        for rec in self.mk.get("races", []):
+            if rec["race"] != race:
+                continue
+            for o in rec["outcomes"]:
+                if o.get("result") == "yes" and not _PLACEHOLDER.match(outcome_name(o["label"])):
+                    out.append((rec["source"], outcome_name(o["label"]), rec, o))
+        return sorted(out, key=lambda x: x[0])
+
+    def race_status(self, race):
+        """'resolved' if any market in the race resolved YES for someone, 'pending' if the race has markets
+        that have not, 'none' without markets."""
+        recs = [r for r in self.mk.get("races", []) if r["race"] == race]
+        if not recs:
+            return "none"
+        return "resolved" if self.settled_for(race) else "pending"
+
+    def official(self, state):
+        return self.cfg.get("official_results", {}).get(state)
 
     # -- markets per candidate
     def _candidates(self):
@@ -109,7 +154,12 @@ class Model:
         linked = {}
         for rec in self.mk.get("races", []):
             for o in rec["outcomes"]:
-                cid = o.get("cand_id") if (o.get("cand_id") in cands and cands[o["cand_id"]]["independent"]) else o.get("covers")
+                name = outcome_name(o["label"])
+                if _PLACEHOLDER.match(name):
+                    continue  # "Other", "Person B": never a named candidate, even in an older data file
+                cid = o.get("cand_id") if (o.get("cand_id") in cands and cands[o["cand_id"]]["independent"]) else None
+                if not cid and o.get("covers") and _PARTY_OUTCOME.match(name):
+                    cid = o["covers"]
                 if cid and cid in cands:
                     linked.setdefault(cid, []).append((rec, o))
         ids = [cid for cid in set(linked) | (slate & set(cands)) if cid not in exclude]
@@ -257,6 +307,8 @@ class Site:
         gc_html = f'<script data-goatcounter="{E(gc)}" async src="https://gc.zgo.at/count.js"></script>' if gc.startswith("https://") else ""
         navs = [("candidates/", "Candidates"), ("party-line/", "Party-line index"), ("methodology/", "Methodology"),
                 ("data/", "Data"), ("about/", "About")]
+        if self.m.post:
+            navs.insert(0, ("results/2026/", "2026 results"))
         current = ' aria-current="page"'
         nav_html = "".join(f'<a href="{root}{p}"{current if nav == p else ""}>{t}</a>' for p, t in navs)
         og_url = self.abs(og)
@@ -330,11 +382,16 @@ def venue_card(site, c, src, depth):
     rec, o = v["rec"], v["o"]
     ch = m.delta(src, o)
     resolved = o.get("result") in ("yes", "no")
+    settled = f' <small>settled {E(fmt_date(o["resolved_at"]))}</small>' if resolved and o.get("resolved_at") else ""
+    pending = ('<p class="note">Not resolved yet: this market is still trading, so this is a price, not a result.</p>'
+               if m.post and not resolved else "")
     vol = o.get("volume") or 0
     thin = vol < m.cfg["markets"].get("thin_market_volume_usd", 25000)
     q = o.get("question") or rec["title"]
     kind_note = ("" if v["kind"] == "candidate" else
-                 f'<p class="small">This market asks whether <em>any</em> independent wins the race, and {E(c["display"])} is the only independent in this race who has reported more than $100,000 to the FEC.</p>')
+                 (f'<p class="small">This market asked whether <em>any</em> independent would win the race, and {E(c["display"])} was the only independent in this race who reported more than $100,000 to the FEC.</p>'
+                  if m.post else
+                  f'<p class="small">This market asks whether <em>any</em> independent wins the race, and {E(c["display"])} is the only independent in this race who has reported more than $100,000 to the FEC.</p>'))
     book = []
     if o.get("bid") is not None:
         book.append(f"bid {o['bid'] * 100:.1f}¢")
@@ -345,9 +402,10 @@ def venue_card(site, c, src, depth):
     stale = " (this read failed; showing the last good price)" if rec.get("stale") else ""
     return f"""<div class="card">
 <div class="venue {src}">{VENUE[src]}</div>
-<div class="kpi">{'Resolved ' + o['result'].upper() if resolved else pct(o.get('price'))} <small>{'' if resolved else 'implied chance'}</small></div>
-<p class="small">{'' if resolved else '24h change: ' + change_html(ch) + ' pts · '}{' · '.join(book)}</p>
+<div class="kpi">{'Resolved ' + o['result'].upper() + settled if resolved else pct(o.get('price')) + ' <small>' + ('last price, not resolved' if m.post else 'implied chance') + '</small>'}</div>
+{'' if resolved else '<p class="small">24h change: ' + change_html(ch) + ' pts · ' + ' · '.join(book) + '</p>'}
 <p class="small muted">“{E(q)}”</p>
+{pending}
 {kind_note}
 {'<p class="note">Thin market: under $' + f"{m.cfg['markets'].get('thin_market_volume_usd', 25000):,}" + ' traded in total, so small trades can move this price a lot.</p>' if thin and not resolved else ''}
 <p class="src">Source: {a_out(rec['url'], VENUE[src] + ' market ' + (rec.get('series') or rec['id']), src)}, contract {E(o['id'])}. Total volume {money(vol) if src == 'polymarket' else f'{vol:,.0f} contracts'}. Read {tm(m.mk.get('fetched_at'))}{stale}.</p>
@@ -393,18 +451,26 @@ def race_money_table(site, c):
 <p class="src">Source: FEC candidate summaries (bulk file weball26). Party labels from the FEC, or from the market where the FEC record has none.</p>"""
 
 
+def outcome_cell(o, post=False):
+    if o.get("result") in ("yes", "no"):
+        return "Resolved " + o["result"].upper()
+    return pct(o.get("price")) + (" <span class=\"tiny\">pending</span>" if post else "")
+
+
 def race_markets_table(site, c):
     out = []
+    post = site.m.post
     for rec in c["race_markets"]:
         rows = "".join(
-            f'<tr><td>{E(o["label"])}</td><td class="r num">{("Resolved " + o["result"].upper()) if o.get("result") else pct(o.get("price"))}</td></tr>'
-            for o in rec["outcomes"])
+            f'<tr><td>{E(o["label"])}</td><td class="r num">{outcome_cell(o, post)}</td></tr>'
+            for o in rec["outcomes"] if not _PLACEHOLDER.match(outcome_name(o["label"])))
         out.append(f'<div class="card"><div class="venue {rec["source"]}">{VENUE[rec["source"]]}</div><h3>{E(rec["title"])}</h3>'
-                   f'<div class="table-wrap"><table><thead><tr><th>Outcome</th><th class="r">Implied chance</th></tr></thead><tbody>{rows}</tbody></table></div>'
+                   f'<div class="table-wrap"><table><thead><tr><th>Outcome</th><th class="r">{"Result or last price" if post else "Implied chance"}</th></tr></thead><tbody>{rows}</tbody></table></div>'
                    f'<p class="src">Source: {a_out(rec["url"], VENUE[rec["source"]] + " " + (rec.get("series") or rec["id"]), rec["source"])}; read {tm(site.m.mk.get("fetched_at"))}.</p></div>')
     if not out:
         return ""
-    return '<h2>The whole race, as the markets price it</h2><div class="grid two">' + "".join(out) + "</div>"
+    head = "The whole race in the markets" if post else "The whole race, as the markets price it"
+    return f'<h2>{head}</h2><div class="grid two">' + "".join(out) + "</div>"
 
 
 def chart_block(site, c):
@@ -418,7 +484,8 @@ def chart_block(site, c):
     if not svg:
         return ""
     legend = "".join(f'<span><i style="background:var({col})"></i>{E(lbl)}</span>' for lbl, col, pts in series if pts)
-    return f"""<h2>Odds over time</h2>
+    resolved = any(v["o"].get("result") in ("yes", "no") for v in c["venues"].values())
+    return f"""<h2>{"Odds until the markets resolved" if resolved else "Odds over time"}</h2>
 <div class="card">{svg}<div class="legend">{legend}</div>
 <p class="src">Daily closing prices from each platform's price-history endpoint, then this tracker's hourly reads for the last 14 days. Stored in <a href="https://github.com/{E(site.cfg['site']['repo'])}/blob/main/data/history.csv" rel="noopener">data/history.csv</a>.</p></div>"""
 
@@ -443,6 +510,17 @@ def share_block(page_url, text):
 </div>"""
 
 
+def race_phrase(c):
+    """'U.S. Senate in Nebraska', 'the U.S. House in Alaska's at-large district'."""
+    state = STATES.get(c["state"], c["state"])
+    if c["office"] == "S":
+        return f"U.S. Senate in {state}"
+    d = str(c["district"] or "00").zfill(2)
+    if d == "00":
+        return f"the U.S. House in {state}'s at-large district"
+    return f"the U.S. House in {state}'s {ordinal(int(d))} congressional district"
+
+
 def party_phrase(c):
     lbl = c["party_label"]
     if c["party"] == "IND":
@@ -450,12 +528,52 @@ def party_phrase(c):
     return f"with the party label “{lbl}”"
 
 
+def _for(label):
+    return ("the " + label) if label.endswith("Party") or label in ("Democrat", "Republican") else label
+
+
+def venue_result_phrase(c, src, v):
+    o = v["o"]
+    subject = (f"{VENUE[src]}’s market on {E(c['display'])}" if v["kind"] == "candidate"
+               else f"{VENUE[src]}’s market on whether an independent would win the race")
+    if o.get("result") in ("yes", "no"):
+        when = f" (settled {E(fmt_date(o['resolved_at']))})" if o.get("resolved_at") else ""
+        return f"{subject} resolved <strong>{o['result'].upper()}</strong>{when}."
+    return f"{subject} has not resolved; its last price was <strong>{pct(o.get('price'))}</strong>."
+
+
+def short_result(src, v):
+    """Plain text for titles, descriptions, badges and share text."""
+    o = v["o"]
+    tag = VENUE[src] + ("" if v["kind"] == "candidate" else " (any independent)")
+    if o.get("result") in ("yes", "no"):
+        return f"{tag} resolved {o['result'].upper()}"
+    return f"{tag} not resolved ({pct(o.get('price'))})"
+
+
+def settled_phrase(m, race, html=True):
+    """'Kalshi and Polymarket settled the race for Pete Ricketts.' Only what the markets themselves resolved."""
+    by_label = {}
+    for src, label, rec, o in m.settled_for(race):
+        by_label.setdefault(label, []).append(VENUE[src])
+    if not by_label:
+        return ""
+    parts = [f"{' and '.join(srcs)} settled the race for {E(_for(label)) if html else _for(label)}" for label, srcs in by_label.items()]
+    return "; ".join(parts) + "."
+
+
+def official_link(m, state, html=True):
+    off = m.official(state)
+    if not off:
+        return "the state's election office"
+    return a_out(off["url"], off["name"], "official") if html else off["name"]
+
+
 # ---------------------------------------------------------------- pages
 
 def candidate_page(site, c):
     m = site.m
     path = f"candidates/{c['slug']}/"
-    race_long = race_label(c["state"], c["office"], c["district"])
     race_short = race_label(c["state"], c["office"], c["district"], short=True)
     k, p = c["venues"].get("kalshi"), c["venues"].get("polymarket")
     odds_bits = []
@@ -465,21 +583,46 @@ def candidate_page(site, c):
         odds_bits.append(f"Polymarket {pct(p['o'].get('price'))}" + (" (any independent)" if p["kind"] == "party" else ""))
     odds_txt = ", ".join(odds_bits) if odds_bits else "no prediction market lists this candidate"
     office_word = "U.S. Senate" if c["office"] == "S" else "U.S. House"
-    title = f"{c['display']} odds and money: {race_short} 2026 | Independents Tracker"
-    desc = (f"{c['display']} ({c['party_label']}, {race_short}) in the 2026 election: {odds_txt}. "
-            f"FEC: {money(c['receipts'])} raised, {money(c['coh'])} cash on hand through {fmt_date(c['cvg_end'])}. Sourced and updated hourly.")
-    summary = [f"{E(c['display'])} is running for {E(race_long)} in the Nov. 3, 2026 general election and filed with the FEC {E(party_phrase(c))}."]
-    if k:
-        summary.append(f"As of {tm(m.mk.get('fetched_at'))}, Kalshi prices {E(c['display'])}’s chance of winning at <strong>{pct(k['o'].get('price'))}</strong>.")
-    if p:
-        if p["kind"] == "candidate":
-            summary.append(f"Polymarket prices it at <strong>{pct(p['o'].get('price'))}</strong>.")
-        else:
-            summary.append(f"Polymarket’s market on whether an independent wins the race is at <strong>{pct(p['o'].get('price'))}</strong>.")
-    if not k and not p:
-        summary.append(f"Neither Kalshi nor Polymarket lists {E(c['display'])} in a market for this race as of {tm(m.mk.get('fetched_at'))}"
-                       + ("; the race's own markets are shown below for context." if c["race_markets"] else "."))
-    summary.append(f"The campaign has reported raising <strong>{money(c['receipts'])}</strong> and had <strong>{money(c['coh'])}</strong> in cash on hand through {E(fmt_date(c['cvg_end']))}.")
+    status = m.cand_status(c)
+    if not m.post:
+        title = f"{c['display']} odds and money: {race_short} 2026 | Independents Tracker"
+        desc = (f"{c['display']} ({c['party_label']}, {race_short}) in the 2026 election: {odds_txt}. "
+                f"FEC: {money(c['receipts'])} raised, {money(c['coh'])} cash on hand through {fmt_date(c['cvg_end'])}. Sourced and updated hourly.")
+        summary = [f"{E(c['display'])} is running for {E(race_phrase(c))} in the Nov. 3, 2026 general election and filed with the FEC {E(party_phrase(c))}."]
+        if k:
+            summary.append(f"As of {tm(m.mk.get('fetched_at'))}, Kalshi prices {E(c['display'])}’s chance of winning at <strong>{pct(k['o'].get('price'))}</strong>.")
+        if p:
+            if p["kind"] == "candidate":
+                summary.append(f"Polymarket prices it at <strong>{pct(p['o'].get('price'))}</strong>.")
+            else:
+                summary.append(f"Polymarket’s market on whether an independent wins the race is at <strong>{pct(p['o'].get('price'))}</strong>.")
+        if not k and not p:
+            summary.append(f"Neither Kalshi nor Polymarket lists {E(c['display'])} in a market for this race as of {tm(m.mk.get('fetched_at'))}"
+                           + ("; the race's own markets are shown below for context." if c["race_markets"] else "."))
+        summary.append(f"The campaign has reported raising <strong>{money(c['receipts'])}</strong> and had <strong>{money(c['coh'])}</strong> in cash on hand through {E(fmt_date(c['cvg_end']))}.")
+        markets_head = "Prediction markets"
+    else:
+        res_txt = "; ".join(short_result(src, v) for src, v in sorted(c["venues"].items())) or "no prediction market listed this candidate"
+        odds_txt = res_txt
+        settled_txt = settled_phrase(m, c["race"], html=False)
+        title = (f"{c['display']}, {race_short} 2026: {'market results' if status == 'resolved' else 'markets'} and money | Independents Tracker")
+        desc = (f"{c['display']} ({c['party_label']}, {race_short}) in the Nov. 3, 2026 election: {res_txt}. {settled_txt} "
+                f"FEC: {money(c['receipts'])} raised through {fmt_date(c['cvg_end'])}. Official results: {official_link(m, c['state'], html=False)}.").replace("  ", " ")
+        summary = [f"{E(c['display'])} ran for {E(race_phrase(c))} in the Nov. 3, 2026 general election and filed with the FEC {E(party_phrase(c))}."]
+        for src in ("kalshi", "polymarket"):
+            if c["venues"].get(src):
+                summary.append(venue_result_phrase(c, src, c["venues"][src]))
+        if not c["venues"]:
+            summary.append(f"No Kalshi or Polymarket market listed {E(c['display'])}" + ("; the race's own markets are shown below." if c["race_markets"] else "."))
+        sp = settled_phrase(m, c["race"])
+        if sp:
+            summary.append(sp)
+        elif c["race_markets"]:
+            summary.append("No market has settled this race yet, and this tracker calls no race itself.")
+        summary.append(f"Official results: {official_link(m, c['state'])}.")
+        summary.append(f"The campaign reported raising <strong>{money(c['receipts'])}</strong> and had <strong>{money(c['coh'])}</strong> in cash on hand through {E(fmt_date(c['cvg_end']))}.")
+        markets_head = {"resolved": "How the markets resolved", "partial": "Prediction markets (partly resolved)",
+                        "pending": "Prediction markets (not resolved yet)"}.get(status, "Prediction markets")
     tags = [chip("I", c["party_label"]), chip("plain", {"I": "Incumbent", "C": "Challenger", "O": "Open seat"}.get(c["ici"], "Candidate"))]
     slate_cfg = site.cfg.get("slate", {})
     if c["slate"]:
@@ -499,7 +642,8 @@ def candidate_page(site, c):
                       "Listed as a matter of record, not as an endorsement.</p>")
     page_url = site.abs(path)
     badge_url = site.abs(f"badge/{c['slug']}.svg")
-    share_text = f"{c['display']} ({race_short}): {odds_txt}; {money(c['receipts'])} raised."
+    share_text = (f"{c['display']} ({race_short}), 2026 election: {odds_txt}." if m.post
+                  else f"{c['display']} ({race_short}): {odds_txt}; {money(c['receipts'])} raised.")
     jsonld = [{
         "@context": "https://schema.org", "@type": "ProfilePage", "name": title, "url": page_url,
         "dateModified": m.mk.get("fetched_at") or iso(m.now), "description": desc,
@@ -508,19 +652,19 @@ def candidate_page(site, c):
         "isPartOf": {"@type": "WebSite", "name": "Independents Tracker", "url": site.abs("")},
     }]
     body = f"""<h1>{E(c['display'])}</h1>
-<p class="lede">{E(c['party_label'])} candidate for {E(race_long)} · general election Tuesday, Nov. 3, 2026</p>
+<p class="lede">{E(c['party_label'])} candidate for {E(race_phrase(c))} · general election {"held " if m.post else ""}Tuesday, Nov. 3, 2026</p>
 <p>{' '.join(tags)}</p>
 <p>{' '.join(summary)}</p>
 {slate_html}
 {member_html}
-<h2>Prediction markets</h2>
+<h2>{markets_head}</h2>
 <div class="grid two">{venue_card(site, c, 'kalshi', 2)}{venue_card(site, c, 'polymarket', 2)}</div>
 {chart_block(site, c)}
 {race_markets_table(site, c)}
 <h2>Campaign money</h2>
 {money_block(site, c)}
 {race_money_table(site, c)}
-{embed_block(site, page_url, badge_url, f"{c['display']} odds and money, Independents Tracker", c['slug'])}
+{embed_block(site, page_url, badge_url, f"{c['display']} {'results' if m.post else 'odds'} and money, Independents Tracker", c['slug'])}
 <h2>Share</h2>
 {share_block(page_url, share_text)}
 <p class="small muted">How these numbers are made: <a href="../../methodology/">methodology</a>. Something wrong? <a href="https://github.com/{E(site.cfg['site']['repo'])}/issues/new?title={E('Correction: ' + c['display'])}" rel="noopener">Report a correction</a>.</p>"""
@@ -529,10 +673,14 @@ def candidate_page(site, c):
               crumbs=[("Candidates", "candidates/"), (c["display"], None)], priority="0.9")
     # badge
     vals = []
-    if k:
-        vals.append(f"Kalshi {pct(k['o'].get('price'))}")
-    if p and p["kind"] == "candidate":
-        vals.append(f"Polymarket {pct(p['o'].get('price'))}")
+    for src, v in (("kalshi", k), ("polymarket", p)):
+        if not v or (src == "polymarket" and v["kind"] != "candidate"):
+            continue
+        r = v["o"].get("result")
+        if r in ("yes", "no"):
+            vals.append(f"{VENUE[src]} resolved {r.upper()}")
+        else:
+            vals.append(f"{VENUE[src]} {pct(v['o'].get('price'))}" + (" pending" if m.post else ""))
     value = " · ".join(vals) if vals else f"raised {money(c['receipts'])}"
     asof = parse_iso(m.mk.get("fetched_at")) or m.now
     site.write(f"badge/{c['slug']}.svg", graphics.badge(f"{c['display']} ({race_short})", f"{value} · {asof.strftime('%b')} {asof.day}",
@@ -543,14 +691,22 @@ def candidates_page(site):
     m = site.m
     rows = []
     for c in m.candidates:
-        k, p = c["venues"].get("kalshi"), c["venues"].get("polymarket")
-        kp = k["o"].get("price") if k else None
-        pp = p["o"].get("price") if p else None
+        cells = []
+        for src in ("kalshi", "polymarket"):
+            v = c["venues"].get(src)
+            if not v:
+                cells.append('<td class="r num" data-v="">—</td>')
+                continue
+            o, star = v["o"], ("*" if v["kind"] == "party" else "")
+            if o.get("result") in ("yes", "no"):
+                cells.append(f'<td class="r num" data-v="{1 if o["result"] == "yes" else 0}">Resolved {o["result"].upper()}{star}</td>')
+            else:
+                pend = ' <span class="tiny">pending</span>' if m.post else ""
+                cells.append(f'<td class="r num" data-v="{"" if o.get("price") is None else o["price"]}">{pct(o.get("price"))}{star}{pend}</td>')
         rows.append(f"""<tr data-slate="{'yes' if c['slate'] else 'no'}" data-office="{c['office']}">
 <td><a href="{c['slug']}/">{E(c['display'])}</a>{' <span class="chip plain">' + E(site.cfg['slate'].get('label', '')) + '</span>' if c['slate'] else ''}<div class="tiny">{E(c['party_label'])}</div></td>
 <td>{E(race_label(c['state'], c['office'], c['district'], short=True))}</td>
-<td class="r num" data-v="{'' if kp is None else kp}">{pct(kp) if kp is not None else '—'}</td>
-<td class="r num" data-v="{'' if pp is None else pp}">{(pct(pp) + ('*' if p['kind'] == 'party' else '')) if pp is not None else '—'}</td>
+{''.join(cells)}
 <td class="r num" data-v="{c['receipts']}">{money(c['receipts'])}</td>
 <td class="r num hide-sm" data-v="{c['coh']}">{money(c['coh'])}</td></tr>""")
     min_listed = site.cfg["fec"].get("min_receipts_listed", 5000)
@@ -561,8 +717,12 @@ def candidates_page(site):
     orow = "".join(f"""<tr data-office="{c['office']}"><td>{E(c['name'])}</td><td>{E(race_label(c['state'], c['office'], c['district'], short=True))}</td>
 <td>{E(c['party_label'])}</td><td class="r num" data-v="{c['receipts']}">{money(c['receipts'])}</td><td class="r num hide-sm" data-v="{c['coh']}">{money(c['coh'])}</td>
 <td class="r hide-sm">{E(fmt_date(c['cvg_end']))}</td><td>{a_out(f"https://www.fec.gov/data/candidate/{c['id']}/?cycle=2026&election_full=false", c['id'], 'fec')}</td></tr>""" for c in others)
+    lede = ("Every independent or no-party candidate for the U.S. House or Senate whom Kalshi or Polymarket listed in a 2026 race, with how each market resolved and FEC money. "
+            "“Resolved” means the market settled; “pending” means it is still trading. See the <a href=\"../results/2026/\">2026 results</a>."
+            if m.post else
+            "Every independent or no-party candidate for the U.S. House or Senate whom Kalshi or Polymarket lists in a 2026 race, with live odds and FEC money. Sorted by the higher of the two market prices.")
     body = f"""<h1>Independent candidates for Congress, 2026</h1>
-<p class="lede">Every independent or no-party candidate for the U.S. House or Senate whom Kalshi or Polymarket lists in a 2026 race, with live odds and FEC money. Sorted by the higher of the two market prices.</p>
+<p class="lede">{lede}</p>
 <div class="filters"><input type="search" placeholder="Filter by name or state" data-filter="#tracked" aria-label="Filter candidates">
 <select data-filter="#tracked" data-key="office" aria-label="Chamber"><option value="">House and Senate</option><option value="S">Senate</option><option value="H">House</option></select>
 <select data-filter="#tracked" data-key="slate" aria-label="Slate"><option value="">All candidates</option><option value="yes">{E(site.cfg['slate'].get('label', ''))} only</option></select>
@@ -572,14 +732,20 @@ def candidates_page(site):
 <th class="r" data-type="num"><button>Raised</button></th><th class="r hide-sm" data-type="num"><button>Cash</button></th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
 <p class="src">Markets read {tm(m.mk.get('fetched_at'))}. * Polymarket's market asks whether any independent wins that race. Money: FEC candidate summaries, 2025–26. The {E(site.cfg['slate'].get('label', ''))} tag marks the seven candidates presented at the Independent National Convention (<a href="{E(site.cfg['slate'].get('source_url', ''))}" rel="noopener">source</a>); it is a record, not an endorsement.</p>
 <h2 id="filers">Other independent filers</h2>
-<p class="small muted">{len(others)} more 2026 House and Senate candidates filed with the FEC under an independent or no-party label and reported at least ${min_listed:,}. FEC registration does not mean a candidate is on the November ballot, and no prediction market lists them; check the state's election office for ballot status.</p>
+<p class="small muted">{len(others)} more 2026 House and Senate candidates filed with the FEC under an independent or no-party label and reported at least ${min_listed:,}. FEC registration {"did not mean a candidate was" if m.post else "does not mean a candidate is"} on the November ballot, and no prediction market {"listed" if m.post else "lists"} them; the state's election office has ballot status{" and results" if m.post else ""}.</p>
 <div class="filters"><input type="search" placeholder="Filter by name or state" data-filter="#filers-table" aria-label="Filter filers"></div>
 <div class="table-wrap"><table id="filers-table" data-sort><thead><tr><th><button>Candidate</button></th><th><button>Race</button></th><th><button>FEC label</button></th>
 <th class="r" data-type="num"><button>Raised</button></th><th class="r hide-sm" data-type="num"><button>Cash</button></th><th class="r hide-sm">Reports through</th><th>FEC</th></tr></thead><tbody>{orow}</tbody></table></div>
 <p class="src">Source: FEC bulk files weball26 and cn26 (statutory 2026 candidates only); published {tm(http_date_to_iso(m.fec.get('source', {}).get('weball', {}).get('last_modified', '')))}.</p>"""
-    site.page("candidates/", "Independent candidates for Congress 2026: odds and money | Independents Tracker",
-              f"All {len(m.candidates)} independent House and Senate candidates listed by Kalshi or Polymarket in 2026, with live odds and FEC fundraising, plus {len(others)} other independent filers.",
-              body, nav="candidates/", crumbs=[("Candidates", None)], priority="0.9")
+    if m.post:
+        title = "Independent candidates for Congress 2026: market results and money | Independents Tracker"
+        desc = (f"All {len(m.candidates)} independent House and Senate candidates listed by Kalshi or Polymarket in 2026, with how each market resolved "
+                f"and FEC fundraising, plus {len(others)} other independent filers.")
+    else:
+        title = "Independent candidates for Congress 2026: odds and money | Independents Tracker"
+        desc = (f"All {len(m.candidates)} independent House and Senate candidates listed by Kalshi or Polymarket in 2026, with live odds and FEC fundraising, "
+                f"plus {len(others)} other independent filers.")
+    site.page("candidates/", title, desc, body, nav="candidates/", crumbs=[("Candidates", None)], priority="0.9")
 
 
 def dist_rows(outcomes, fmt_label=lambda s: s):
@@ -590,6 +756,167 @@ def dist_rows(outcomes, fmt_label=lambda s: s):
 
 
 def home_page(site):
+    if site.m.post:
+        return home_post(site)
+    return home_pre(site)
+
+
+def party_line_teaser(site, root=""):
+    m = site.m
+    teaser = []
+    for chamber in ("Senate", "House"):
+        spells = [(s, mm) for mm in m.members if mm["chamber"] == chamber and mm["current"] and not mm.get("delegate")
+                  for s in [mm["spells"][-1]] if s.get("score") is not None and s["pu_cast"] >= 50]
+        spells.sort(key=lambda x: x[0]["score"])
+        rows = "".join(f'<tr><td><a href="{root}party-line/{mm["slug"]}/">{E(mm["name"])}</a> {chip(s["party"], s["party"] + "-" + mm["state"])}</td><td class="r num">{pct(s["score"])}</td></tr>'
+                       for s, mm in spells[:6])
+        teaser.append(f'<div class="card"><h3>{chamber}: least party-line</h3><div class="table-wrap"><table><thead><tr><th>Member</th><th class="r">Votes with party</th></tr></thead><tbody>{rows}</tbody></table></div></div>')
+    return '<div class="grid two">' + "".join(teaser) + "</div>"
+
+
+def results_summary(site):
+    m = site.m
+    cs = m.candidates
+    resolved = [c for c in cs if m.cand_status(c) == "resolved"]
+    waiting = [c for c in cs if m.cand_status(c) in ("pending", "partial")]
+    nomarket = [c for c in cs if m.cand_status(c) == "none"]
+    yes = [c for c in resolved if any(v["o"].get("result") == "yes" for v in c["venues"].values())]
+    return {"n": len(cs), "resolved": resolved, "waiting": waiting, "nomarket": nomarket, "yes": yes}
+
+
+def results_table(site, root=""):
+    """One row per tracked independent: what each market resolved to, what the race settled for, official results."""
+    m = site.m
+    order = {"pending": 0, "partial": 0, "resolved": 1, "none": 2}
+    rows = []
+    for c in sorted(m.candidates, key=lambda c: (order[m.cand_status(c)], c["race"], -c["receipts"])):
+        st = m.cand_status(c)
+        label = {"resolved": "Resolved", "partial": "Partly resolved", "pending": "Pending"}.get(st, "No market")
+        cls = "plain" if st in ("resolved", "none") else "I"
+        cells = []
+        for src in ("kalshi", "polymarket"):
+            v = c["venues"].get(src)
+            if not v:
+                cells.append('<td class="hide-sm">—</td>')
+                continue
+            o, rec = v["o"], v["rec"]
+            star = "*" if v["kind"] == "party" else ""
+            text = (f"Resolved {o['result'].upper()}" if o.get("result") in ("yes", "no")
+                    else f"{pct(o.get('price'))} pending")
+            cells.append(f'<td class="hide-sm">{a_out(rec["url"], text + star, src)}</td>')
+        by_label = {}
+        for src, lab, rec, o in m.settled_for(c["race"]):
+            by_label.setdefault(lab, []).append(VENUE[src])
+        settled = "<br>".join(f'{E(lab)} <span class="tiny">({", ".join(srcs)})</span>' for lab, srcs in by_label.items()) or '<span class="muted">Not settled yet</span>'
+        rows.append(f"""<tr><td><a href="{root}candidates/{c['slug']}/">{E(c['display'])}</a><div class="tiny">{E(c['party_label'])}</div></td>
+<td>{E(race_label(c['state'], c['office'], c['district'], short=True))}</td><td>{chip(cls, label)}</td>{''.join(cells)}
+<td>{settled}</td><td class="small">{official_link(m, c['state'])}</td></tr>""")
+    return f"""<div class="table-wrap"><table><thead><tr><th>Independent</th><th>Race</th><th>Markets</th><th class="hide-sm">Kalshi</th><th class="hide-sm">Polymarket</th><th>Race settled for</th><th>Official results</th></tr></thead>
+<tbody>{''.join(rows)}</tbody></table></div>
+<p class="src">Market resolutions read {tm(m.mk.get('fetched_at'))} from Kalshi (market result) and Polymarket (final UMA resolution). * Polymarket's market asked whether any independent would win that race. “Race settled for” lists only outcomes a market resolved YES. Official counts and certification come from each state.</p>"""
+
+
+def aggregate_cards(site):
+    m = site.m
+    cards = []
+    for a, venue in ((m.agg("polymarket", "how-many-independents"), "polymarket"), (m.agg("kalshi", "KXINDCOUNT"), "kalshi")):
+        if not a:
+            continue
+        done = a["outcomes"] and all(o.get("result") in ("yes", "no") for o in a["outcomes"])
+        note = "" if done else '<p class="small muted">Not resolved yet: the prices are last trades, not results.</p>'
+        cards.append(f'<div class="card"><div class="venue {venue}">{VENUE[venue]}</div><h3>{E(a["title"])}</h3>{note}<div class="dist">{dist_rows(a["outcomes"])}</div>'
+                     f'<p class="src">Source: {a_out(a["url"], VENUE[venue] + " " + (a.get("series") or a["id"]), venue)}; read {tm(m.mk.get("fetched_at"))}.</p></div>')
+    return '<div class="grid two">' + "".join(cards) + "</div>" if cards else ""
+
+
+def control_line(site):
+    m = site.m
+    p_ctrl = m.agg("polymarket", "which-party-will-win-the-senate")
+    if not p_ctrl:
+        return ""
+    won = [o for o in p_ctrl["outcomes"] if o.get("result") == "yes"]
+    if won:
+        return (f'<p class="small muted">For context, Polymarket resolved “{E(p_ctrl["title"])}” for {E(_for(won[0]["label"]))}. '
+                f'({a_out(p_ctrl["url"], "source", "polymarket")})</p>')
+    return (f'<p class="small muted">For context, Polymarket\'s “{E(p_ctrl["title"])}” has not resolved: '
+            + ", ".join(f'{E(o["label"])} {pct(o.get("price"))}' for o in p_ctrl["outcomes"])
+            + f'. ({a_out(p_ctrl["url"], "source", "polymarket")}, read {tm(m.mk.get("fetched_at"))})</p>')
+
+
+def results_intro(site):
+    r = results_summary(site)
+    waiting = ", ".join(f'{E(c["display"])} ({E(race_label(c["state"], c["office"], c["district"], short=True))})' for c in r["waiting"])
+    parts = [f"Markets have resolved for <strong>{len(r['resolved'])}</strong> of the {r['n']} independents this tracker followed"]
+    if r["resolved"]:
+        n_yes = len(r["yes"])
+        parts.append(f"; {'<strong>none</strong>' if n_yes == 0 else '<strong>' + str(n_yes) + '</strong>'} of those {len(r['resolved'])} resolved YES")
+    parts.append(".")
+    if r["waiting"]:
+        parts.append(f" Still pending: {waiting}.")
+    if r["nomarket"]:
+        parts.append(f" No market listed {', '.join(E(c['display']) for c in r['nomarket'])}.")
+    return "".join(parts)
+
+
+def home_post(site):
+    m = site.m
+    vv_last = max((c.get("last_date", "") for c in m.votes.get("chambers", {}).values()), default="")
+    r = results_summary(site)
+    jsonld_desc = ""
+    if m.phase == "results":
+        title = "2026 results for independent candidates, and party-line voting in Congress | Independents Tracker"
+        desc = (f"How Kalshi and Polymarket resolved the 2026 House and Senate races of {r['n']} independent candidates, with links to each market and the states' official results, "
+                "plus a party-line score for every member of Congress.")
+        body = f"""<h1>Independents in the 2026 midterms: results</h1>
+<p class="lede">Election Day was Tuesday, Nov. 3, 2026. Here is how the prediction markets on every House and Senate race with an independent candidate this tracker followed resolved, with links to each market and to each state's official results. A market that has not resolved is marked pending; this tracker calls no race itself.</p>
+<p>{results_intro(site)}</p>
+<h2>Race by race</h2>
+{results_table(site)}
+<p><a class="btn" href="results/2026/">Permanent 2026 results page →</a></p>
+<h2>How many independents were elected to Congress?</h2>
+{aggregate_cards(site)}
+{control_line(site)}
+<h2>The lasting record: who votes against their own party?</h2>
+<p class="small muted">Share of party-line votes on which each member sided with their party's majority, 119th Congress, through {E(fmt_date(vv_last))}. Lowest first; current voting members with at least 50 such votes.</p>
+{party_line_teaser(site)}
+<p><a class="btn" href="party-line/">Every member's party-line score →</a></p>
+<h2>How this works</h2>
+<p>Market results come from the public read APIs of <a href="https://kalshi.com" rel="noopener">Kalshi</a> and <a href="https://polymarket.com" rel="noopener">Polymarket</a>, money from the FEC's bulk files, and votes from <a href="https://voteview.com" rel="noopener">Voteview</a>. A scheduled job rereads them and rebuilds this site; nothing is typed in by hand. <a href="methodology/#results">How results are shown</a> · <a href="data/">Data</a></p>"""
+    else:
+        title = "Independents Tracker: how often every member of Congress votes with their party, and the 2026 independents"
+        desc = ("A party-line score for every member of the 119th Congress, with each vote against the party linked to the official record, "
+                "plus how the markets resolved for 2026's independent candidates.")
+        body = f"""<h1>Who votes against their own party?</h1>
+<p class="lede">A party-line score for every member of the 119th Congress (2025–26): how often each member sided with their party's majority when the two parties split, with every vote against the party linked to the official record.</p>
+{party_line_teaser(site)}
+<p><a class="btn primary" href="party-line/">Every member's party-line score →</a></p>
+<h2>The 2026 independents</h2>
+<p>{results_intro(site)} <a href="results/2026/">Race-by-race results</a>, with each market and the states' official results.</p>
+<h2>How this works</h2>
+<p>Votes come from <a href="https://voteview.com" rel="noopener">Voteview</a>, market results from <a href="https://kalshi.com" rel="noopener">Kalshi</a> and <a href="https://polymarket.com" rel="noopener">Polymarket</a>, and money from the FEC. A scheduled job rereads them and rebuilds this site. <a href="methodology/">Methodology</a> · <a href="data/">Data</a></p>"""
+    jsonld = [{"@context": "https://schema.org", "@type": "WebSite", "name": "Independents Tracker", "url": site.abs(""), "description": desc}]
+    site.page("", title, desc, body, jsonld=jsonld, priority="1.0")
+
+
+def results_page(site):
+    """Permanent page: /results/2026/ (built once the polls have closed)."""
+    m = site.m
+    r = results_summary(site)
+    title = "2026 election: how the markets resolved for independent candidates for Congress | Independents Tracker"
+    desc = (f"Race-by-race 2026 results for {r['n']} independent House and Senate candidates: how Kalshi and Polymarket resolved, "
+            "what each race settled for, and links to each state's official results.")
+    body = f"""<h1>2026 midterms: the independents' races</h1>
+<p class="lede">How the prediction markets resolved for every independent candidate this tracker followed in the Nov. 3, 2026 general election, with each state's official results. Markets that have not resolved are marked pending; this tracker calls no race itself.</p>
+<p>{results_intro(site)}</p>
+{results_table(site, root="../../")}
+<h2>How many independents were elected to Congress?</h2>
+{aggregate_cards(site)}
+{control_line(site)}
+<p class="small muted">Method: <a href="../../methodology/#results">how results are shown</a>. Corrections: <a href="https://github.com/{E(site.cfg['site']['repo'])}/issues" rel="noopener">open an issue</a>.</p>"""
+    site.page("results/2026/", title, desc, body, nav="candidates/", crumbs=[("Results", None), ("2026", None)], priority="0.9")
+
+
+def home_pre(site):
     m = site.m
     cfg = site.cfg
     eday = date.fromisoformat(cfg["site"]["election_date"])
@@ -862,6 +1189,14 @@ def methodology_page(site):
 <li><strong>Every break is linked</strong> to the Clerk of the House or Senate record and to Voteview, so any line can be checked.</li>
 <li><strong>Limits:</strong> all roll calls count equally, procedural votes included, and a low score is not a judgment: it can reflect a district, a principle or a protest from either side.</li>
 </ul>
+<h2 id="results">After Election Day</h2>
+<p>The site changes its framing on its own, by date. Before polls close it shows odds. From 06:00 UTC on Nov. 4, 2026 (1 a.m. ET, when the last polls closed in Alaska's Aleutian Islands) it leads with results. From Jan. 3, 2027, when the next Congress convenes, it leads with the party-line index, and the 2026 results stay at {'<a href="../results/2026/">/results/2026/</a>' if site.m.post else '/results/2026/ (published once the polls close)'}.</p>
+<ul>
+<li><strong>A result is a market's own resolution:</strong> Kalshi's market <code>result</code> (yes or no, with its settlement time), and Polymarket's outcome once it has closed and its UMA resolution is final. A closed Polymarket market whose resolution is only proposed or disputed stays pending.</li>
+<li><strong>Pending is labeled as pending.</strong> A market that has not resolved shows its last price with the words “not resolved”, never as a result. This tracker calls no race itself, and “race settled for” lists only outcomes a market resolved YES.</li>
+<li><strong>Official results</strong> come from each state's election office, linked on every result. Counts can change until a state certifies, and the markets' rules say when they resolve.</li>
+<li><strong>Placeholder outcomes</strong> that markets create for unnamed candidates (“Other”, “Person B”) are never matched to anyone.</li>
+</ul>
 <h2 id="polls">Why there is no polling average yet</h2>
 <p>There is no open, licensed feed of 2026 race polls since FiveThirtyEight's poll database closed in 2025. Copying averages from other sites would break their terms, so this tracker shows markets and money and leaves polls out until a reusable source exists.</p>
 <h2 id="schedule">Update schedule</h2>
@@ -1041,6 +1376,8 @@ def build(out=None, site_url=None, env=None, now=None, data_dir=DATA):
         shutil.copy(os.path.join(ROOT, "static", "og-default.png"), os.path.join(out, "og", "party-line.png"))
     site = Site(out, site_url, cfg, model, env)
     home_page(site)
+    if model.post:
+        results_page(site)
     candidates_page(site)
     for c in model.candidates:
         candidate_page(site, c)

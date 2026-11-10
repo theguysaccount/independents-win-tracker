@@ -143,7 +143,31 @@ def match_candidate(label, race, fec):
     return hits[0] if len(hits) == 1 else None
 
 
-_PARTY_OUTCOME = re.compile(r"^(an? )?(independent|other|third[- ]party)( candidate| party)?$", re.I)
+# Only a generic "Independent" outcome can stand for a race's independent. "Other" means any candidate
+# the market did not list, so it never names anyone.
+_PARTY_OUTCOME = re.compile(r"^(an? )?independent( candidate)?$", re.I)
+# Placeholder rows Polymarket creates for candidates it may add later ("Person B", "A", "Party C", "Other").
+# They close at resolution with prices of 0, which says nothing about any real candidate.
+_PLACEHOLDER = re.compile(r"^(person [a-z]|party [a-z]|[a-z]|other|others|another party)$", re.I)
+
+
+def _iso_ts(s):
+    """'2026-11-04 11:35:53.881024+00' or '2026-11-04T09:08:50.76Z' -> '2026-11-04T11:35:53Z'."""
+    s = str(s or "").strip().replace(" ", "T")
+    if s.endswith("+00"):
+        s += ":00"
+    t = parse_iso(s)
+    return iso(t) if t else ""
+
+
+def poly_result(m, price):
+    """'yes' / 'no' once the market has closed AND its UMA resolution is final; '' otherwise."""
+    status = (m.get("umaResolutionStatus") or "").lower()
+    if not m.get("closed") or price not in (0.0, 1.0):
+        return ""
+    if status and status != "resolved":
+        return ""  # closed but the resolution is only proposed or disputed: not a call
+    return "yes" if price == 1.0 else "no"
 
 
 def outcome_name(label):
@@ -204,10 +228,13 @@ def kalshi_race_record(ev, race, fec, max_spread):
         q = kalshi_quote(m, max_spread)
         if result in ("yes", "no"):
             q["price"] = 1.0 if result == "yes" else 0.0
+        else:
+            result = ""
         outcomes.append({
             "id": m["ticker"], "label": name, "cand_id": cid,
             "question": (m.get("title") or "").replace(")s win", ") win"),
-            "rules": m.get("rules_primary", ""), "status": status, "result": result, **q,
+            "rules": m.get("rules_primary", ""), "status": status, "result": result,
+            "resolved_at": _iso_ts(m.get("settlement_ts") or m.get("close_time")) if result else "", **q,
         })
     outcomes.sort(key=lambda o: -(o["price"] or 0))
     return {
@@ -264,17 +291,18 @@ def poly_race_record(ev, race, fec, max_spread):
             continue
         label = (m.get("groupItemTitle") or m.get("question") or "").strip()
         name = outcome_name(label)
+        if _PLACEHOLDER.match(name):
+            continue
         cid, party_outcome = match_candidate(name, race, fec), False
         if not cid and _PARTY_OUTCOME.match(name):
             party_outcome = True
         q = poly_quote(m, max_spread)
-        result = ""
-        if m.get("closed") and q["price"] in (0.0, 1.0):
-            result = "yes" if q["price"] == 1.0 else "no"
+        result = poly_result(m, q["price"])
         outcomes.append({
             "id": str(m["id"]), "label": label, "cand_id": cid, "party_outcome": party_outcome,
             "question": m.get("question", ""), "token": _first_token(m),
-            "status": "closed" if m.get("closed") else "active", "result": result, **q,
+            "status": "closed" if m.get("closed") else "active", "result": result,
+            "resolved_at": _iso_ts(m.get("closedTime")) if result else "", **q,
         })
     outcomes.sort(key=lambda o: -(o["price"] or 0))
     # A generic "Independent" outcome speaks for the race's independent only if there is exactly one
@@ -332,8 +360,10 @@ def aggregates(cfg, max_spread):
                 result = (m.get("result") or "").lower()
                 if result in ("yes", "no"):
                     q["price"] = 1.0 if result == "yes" else 0.0
+                else:
+                    result = ""
                 outs.append({"id": m["ticker"], "label": m.get("yes_sub_title") or "Yes", "question": m.get("title", ""),
-                             "result": result, **q})
+                             "result": result, "resolved_at": _iso_ts(m.get("settlement_ts")) if result else "", **q})
             out.append({"source": "kalshi", "id": ev["event_ticker"], "title": ev.get("title", ""),
                         "series": series, "url": kalshi_url(series, ev["event_ticker"], ev.get("title", "")), "outcomes": outs})
     for slug in cfg["markets"].get("polymarket_aggregate_slugs", []):
@@ -347,10 +377,13 @@ def aggregates(cfg, max_spread):
         for m in ev.get("markets", []):
             if m.get("outcomePrices") in (None, "", "[]") or (not m.get("active") and not m.get("closed")):
                 continue
+            label = (m.get("groupItemTitle") or "").strip()
+            if _PLACEHOLDER.match(label):
+                continue
             q = poly_quote(m, max_spread)
-            result = ("yes" if q["price"] == 1.0 else "no") if m.get("closed") and q["price"] in (0.0, 1.0) else ""
-            outs.append({"id": str(m["id"]), "label": (m.get("groupItemTitle") or "").strip(),
-                         "question": m.get("question", ""), "token": _first_token(m), "result": result, **q})
+            result = poly_result(m, q["price"])
+            outs.append({"id": str(m["id"]), "label": label, "question": m.get("question", ""), "token": _first_token(m),
+                         "result": result, "resolved_at": _iso_ts(m.get("closedTime")) if result else "", **q})
         out.append({"source": "polymarket", "id": slug, "title": (ev.get("title") or "").strip(),
                     "url": f"https://polymarket.com/event/{slug}", "outcomes": outs})
     return out

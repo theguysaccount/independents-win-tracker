@@ -19,14 +19,16 @@ NOW = datetime(2026, 10, 25, 21, 0, tzinfo=timezone.utc)
 PRONOUNS = re.compile(r"\b(he|she|him|his|her|hers|himself|herself)\b", re.I)
 
 
-def make_data_dir(d):
+def make_data_dir(d, resolved=False):
     w, n = F.fec_texts()
     f = fec.build(w, n, F.CFG, {"weball": {"url": "x", "last_modified": "Sun, 25 Oct 2026 05:39:17 GMT"}})
     f["fetched_at"] = "2026-10-25T06:00:00Z"
     common.write_json(os.path.join(d, "fec.json"), f)
-    races = [markets.kalshi_race_record(F.kalshi_event_ne(), "NE-S", f, 0.1),
+    ne_k = F.kalshi_event_ne_resolved() if resolved else F.kalshi_event_ne()
+    ne_p = F.poly_event_ne_resolved() if resolved else F.poly_event_ne()
+    races = [markets.kalshi_race_record(ne_k, "NE-S", f, 0.1),
              markets.kalshi_race_record(F.kalshi_event_ak(), "AK-H-00", f, 0.1),
-             markets.poly_race_record(F.poly_event_ne(), "NE-S", f, 0.1)]
+             markets.poly_race_record(ne_p, "NE-S", f, 0.1)]
     agg = [{"source": "polymarket", "id": "how-many-independents-will-be-elected-to-congress",
             "title": "How many Independents will be elected to Congress?", "url": "https://polymarket.com/event/x",
             "outcomes": [{"id": "1", "label": "0", "price": 0.56}, {"id": "2", "label": "1", "price": 0.275}]}]
@@ -137,6 +139,122 @@ class FixtureSiteTest(unittest.TestCase):
         finally:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(orig)
+
+
+def build_fixture_site(tmp, now, cfg, resolved):
+    data = os.path.join(tmp, "data")
+    os.makedirs(data)
+    make_data_dir(data, resolved=resolved)
+    out = os.path.join(tmp, "site")
+    orig = build.load_config
+    build.load_config = lambda: cfg
+    try:
+        site = build.build(out=out, site_url="https://example.test/independents-win-tracker", env={}, now=now, data_dir=data)
+        find = og.find_chrome
+        og.find_chrome = lambda: None
+        try:
+            og.run(out, site.m)
+        finally:
+            og.find_chrome = find
+    finally:
+        build.load_config = orig
+    return site, out
+
+
+class PostElectionSiteTest(unittest.TestCase):
+    """After the polls close: results lead, unresolved markets say so, nothing is called that the sources did not call."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.mkdtemp()
+        cfg = json.loads(json.dumps(F.CFG))
+        cfg["official_results"] = F.OFFICIAL
+        cls.site, cls.out = build_fixture_site(cls.tmp, datetime(2026, 11, 10, 3, 0, tzinfo=timezone.utc), cfg, resolved=True)
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp)
+
+    def read(self, rel):
+        with open(os.path.join(self.out, rel), encoding="utf-8") as f:
+            return f.read()
+
+    def test_phase(self):
+        self.assertEqual(self.site.m.phase, "results")
+
+    def test_home_leads_with_results(self):
+        html = self.read("index.html")
+        self.assertIn("<h1>Independents in the 2026 midterms: results</h1>", html)
+        self.assertNotIn("Can independents win", html)
+        self.assertNotIn("countdown", html)
+        self.assertIn("this tracker calls no race itself", html)
+        self.assertIn("The lasting record: who votes against their own party?", html)
+        self.assertIn('href="results/2026/"', html)
+
+    def test_results_page(self):
+        html = self.read("results/2026/index.html")
+        self.assertIn("Pete Ricketts", html)
+        self.assertIn("https://electionresults.nebraska.gov/", html)
+        hill_row = html.split("bill-hill/")[1].split("</tr>")[0]
+        self.assertIn("Pending", hill_row)
+        self.assertIn("Not settled yet", hill_row)
+        self.assertIn("results/2026/", self.read("sitemap.xml"))
+
+    def test_resolved_candidate(self):
+        html = self.read("candidates/dan-osborn/index.html")
+        self.assertIn("Dan Osborn, NE Senate 2026: market results and money", html)
+        self.assertIn("ran for U.S. Senate in Nebraska", html)
+        self.assertIn("Kalshi’s market on Dan Osborn resolved <strong>NO</strong> (settled Nov. 4, 2026)", html)
+        self.assertIn("Kalshi and Polymarket settled the race for Pete Ricketts.", html)
+        self.assertIn("How the markets resolved", html)
+        self.assertNotIn("Other", guard.visible_text(html.split("The whole race")[1].split("Campaign money")[0])[0])
+        self.assertIn("Kalshi resolved NO", self.read("badge/dan-osborn.svg"))
+
+    def test_pending_candidate_is_not_called(self):
+        html = self.read("candidates/bill-hill/index.html")
+        self.assertIn("Bill Hill, AK-AL 2026: markets and money", html)
+        self.assertIn("has not resolved; its last price was <strong>20.5%</strong>", html)
+        self.assertIn("No market has settled this race yet, and this tracker calls no race itself.", html)
+        self.assertIn("last price, not resolved", html)
+        self.assertNotIn("settled the race", html)
+        self.assertIn("https://www.elections.alaska.gov/election-results/", html)
+
+    def test_candidates_index(self):
+        html = self.read("candidates/index.html")
+        self.assertIn("market results and money", html)
+        self.assertIn("Resolved NO", html)
+        self.assertIn("pending", html)
+
+    def test_no_pronouns_and_guard(self):
+        for rel in ["index.html", "results/2026/index.html", "candidates/dan-osborn/index.html", "candidates/bill-hill/index.html"]:
+            text, _ = guard.visible_text(self.read(rel))
+            self.assertIsNone(PRONOUNS.search(text), rel)
+        mc, mm = guard.MIN_CANDIDATES, guard.MIN_MEMBERS
+        guard.MIN_CANDIDATES, guard.MIN_MEMBERS = 1, 1
+        try:
+            errors, _ = guard.check(self.out)
+        finally:
+            guard.MIN_CANDIDATES, guard.MIN_MEMBERS = mc, mm
+        self.assertEqual(errors, [])
+
+
+class ArchiveSiteTest(unittest.TestCase):
+    """Once the next Congress convenes, the party-line index leads and the results stay at /results/2026/."""
+
+    def test_archive_home(self):
+        tmp = tempfile.mkdtemp()
+        try:
+            cfg = json.loads(json.dumps(F.CFG))
+            cfg["phases"] = {"results_from": "2026-11-04T06:00:00Z", "archive_from": "2027-01-03T17:00:00Z"}
+            site, out = build_fixture_site(tmp, datetime(2027, 1, 10, tzinfo=timezone.utc), cfg, resolved=True)
+            self.assertEqual(site.m.phase, "archive")
+            with open(os.path.join(out, "index.html"), encoding="utf-8") as f:
+                html = f.read()
+            self.assertIn("<h1>Who votes against their own party?</h1>", html)
+            self.assertIn('href="results/2026/"', html)
+            self.assertTrue(os.path.exists(os.path.join(out, "results", "2026", "index.html")))
+        finally:
+            shutil.rmtree(tmp)
 
 
 @unittest.skipUnless(os.path.exists(os.path.join(common.DATA, "votes.json")), "no committed data yet")

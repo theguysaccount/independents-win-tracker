@@ -119,6 +119,23 @@ class MarketsTest(unittest.TestCase):
         self.assertEqual(ind["price"], 0.255)
         self.assertEqual(ind["token"], "111")
 
+    def test_placeholders_never_name_anyone(self):
+        rec = markets.poly_race_record(F.poly_event_ne_resolved(), "NE-S", self.fec, 0.1)
+        labels = [o["label"] for o in rec["outcomes"]]
+        self.assertNotIn("Other", labels, "'Other' means any unlisted candidate, so it is dropped")
+        self.assertNotIn("Person B", labels)
+        ind = next(o for o in rec["outcomes"] if o["label"] == "Independent")
+        self.assertEqual((ind["result"], ind.get("covers")), ("no", "S4NE00207"))
+        self.assertEqual(ind["resolved_at"], "2026-11-04T11:35:53Z")
+        self.assertFalse(markets._PARTY_OUTCOME.match("Other"))
+
+    def test_polymarket_needs_a_final_resolution(self):
+        ev = F.poly_event_ne_resolved()
+        for m in ev["markets"]:
+            m["umaResolutionStatus"] = "proposed"
+        rec = markets.poly_race_record(ev, "NE-S", self.fec, 0.1)
+        self.assertTrue(all(o["result"] == "" for o in rec["outcomes"]), "a proposed resolution is not a call")
+
     def test_resolved_kalshi_market(self):
         ev = F.kalshi_event_ne()
         ev["markets"][1].update(status="settled", result="yes")

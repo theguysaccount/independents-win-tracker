@@ -15,7 +15,8 @@ official record.
 
 | Page | What it answers |
 |---|---|
-| `/` | How many independents might win, and the independents ranked by market odds |
+| `/` | Before Election Day: the independents ranked by market odds. After: how each market resolved. From Jan. 3, 2027: the party-line index first |
+| `/results/2026/` | Permanent race-by-race results: each market's resolution, what the race settled for, the state's official results |
 | `/candidates/<name>/` | One candidate: Kalshi and Polymarket prices, price history, the whole race's market, FEC money, money in the race, an embeddable badge |
 | `/candidates/` | All tracked independents, plus every other independent FEC filer |
 | `/party-line/` | Every member of Congress by party-line score, House and Senate |

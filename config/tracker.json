@@ -26,14 +26,74 @@
   "description": "Seven federal candidates presented as the 2026 Independent Slate at the Independent National Convention (Washington, D.C., Sept. 23-25, 2026). The slate was assembled by Independents Win PAC. This tracker is not affiliated with the convention or the PAC and lists the slate only as a matter of record.",
   "source_name": "The Fulcrum, Oct. 14, 2026",
   "source_url": "https://thefulcrum.us/ethics-leadership/independent-political-movement",
-  "fec_ids": ["S4NE00207", "S6MT00287", "S6ID00146", "S6SD01117", "H2CA03157", "H6AK01092", "H6ID01318"]
+  "fec_ids": [
+   "S4NE00207",
+   "S6MT00287",
+   "S6ID00146",
+   "S6SD01117",
+   "H2CA03157",
+   "H6AK01092",
+   "H6ID01318"
+  ]
  },
  "exclude": {},
  "markets": {
-  "kalshi_aggregate_series": ["KXINDCOUNT", "KXISENATEWON", "KXIHOUSEWON", "KXUSINDEPENDENTCONGRESS"],
-  "polymarket_aggregate_slugs": ["how-many-independents-will-be-elected-to-congress", "which-party-will-win-the-senate-in-2026"],
+  "kalshi_aggregate_series": [
+   "KXINDCOUNT",
+   "KXISENATEWON",
+   "KXIHOUSEWON",
+   "KXUSINDEPENDENTCONGRESS"
+  ],
+  "polymarket_aggregate_slugs": [
+   "how-many-independents-will-be-elected-to-congress",
+   "which-party-will-win-the-senate-in-2026"
+  ],
   "max_spread_for_midpoint": 0.1,
   "thin_market_volume_usd": 25000
  },
- "sources_enabled": {"fec": true, "kalshi": true, "polymarket": true, "voteview": true}
+ "sources_enabled": {
+  "fec": true,
+  "kalshi": true,
+  "polymarket": true,
+  "voteview": true
+ },
+ "phases": {
+  "results_from": "2026-11-04T06:00:00Z",
+  "archive_from": "2027-01-03T17:00:00Z",
+  "note": "results_from: 06:00 UTC (1 a.m. ET) on Nov. 4, when the last polls, in Alaska's Aleutian Islands, close. archive_from: noon ET on Jan. 3, 2027, when the 120th Congress convenes."
+ },
+ "official_results": {
+  "AK": {
+   "name": "Alaska Division of Elections",
+   "url": "https://www.elections.alaska.gov/election-results/"
+  },
+  "CA": {
+   "name": "California Secretary of State",
+   "url": "https://electionresults.sos.ca.gov/"
+  },
+  "IA": {
+   "name": "Iowa Secretary of State",
+   "url": "https://electionresults.iowa.gov/"
+  },
+  "ID": {
+   "name": "Idaho Secretary of State",
+   "url": "https://voteidaho.gov/election-results/"
+  },
+  "IL": {
+   "name": "Illinois State Board of Elections",
+   "url": "https://www.elections.il.gov/ElectionOperations/ElectionResults.aspx"
+  },
+  "MT": {
+   "name": "Montana Secretary of State",
+   "url": "https://electionresults.mt.gov/"
+  },
+  "NE": {
+   "name": "Nebraska Secretary of State",
+   "url": "https://electionresults.nebraska.gov/"
+  },
+  "SD": {
+   "name": "South Dakota Secretary of State",
+   "url": "https://electionresults.sd.gov/"
+  }
+ }
 }

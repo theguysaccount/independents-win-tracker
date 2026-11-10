@@ -160,3 +160,33 @@ def vote_texts():
     return {"H_members": H_MEMBERS, "H_rollcalls": H_ROLLCALLS, "H_votes": H_VOTES,
             "S_members": S_MEMBERS, "S_rollcalls": S_ROLLCALLS, "S_votes": S_VOTES,
             "legislators": json.dumps(LEGISLATORS)}
+
+
+# After Election Day: Nebraska resolved on both venues, with Polymarket's placeholder rows closed too.
+def kalshi_event_ne_resolved():
+    ev = kalshi_event_ne()
+    for m in ev["markets"]:
+        won = m["ticker"].endswith("-R")
+        m.update(status="finalized", result="yes" if won else "no", settlement_ts="2026-11-04T09:08:50.762443Z",
+                 yes_bid_dollars="0.0000", yes_ask_dollars="1.0000")
+    return ev
+
+
+def poly_event_ne_resolved():
+    ev = poly_event_ne()
+    for m in ev["markets"]:
+        if m["groupItemTitle"] == "Person B":
+            m.update(outcomePrices=json.dumps(["0", "1"]), closed=True, active=True, umaResolutionStatus="resolved")
+            continue
+        won = m["groupItemTitle"].startswith("Pete Ricketts")
+        m.update(outcomePrices=json.dumps(["1", "0"] if won else ["0", "1"]), closed=True,
+                 closedTime="2026-11-04 11:35:53.881024+00", umaResolutionStatus="resolved")
+    ev["markets"].append({"id": "634903", "groupItemTitle": "Other", "question": "Will a candidate not listed above win?",
+                          "outcomePrices": json.dumps(["0", "1"]), "bestBid": 0, "bestAsk": 1, "lastTradePrice": 0,
+                          "volumeNum": 0, "active": True, "closed": True, "umaResolutionStatus": "resolved",
+                          "clobTokenIds": json.dumps(["9", "10"])})
+    return ev
+
+
+OFFICIAL = {"NE": {"name": "Nebraska Secretary of State", "url": "https://electionresults.nebraska.gov/"},
+            "AK": {"name": "Alaska Division of Elections", "url": "https://www.elections.alaska.gov/election-results/"}}

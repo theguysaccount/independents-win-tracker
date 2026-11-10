@@ -37,4 +37,5 @@ human to send. Distribution runs on machine channels built into the product.
 | Nightly (FEC) | New money totals once the FEC file changes |
 | When Voteview publishes | Party-line scores recomputed for every member |
 | Mondays | Self-test of every live URL and of data freshness |
-| Nov. 3–4 | Markets resolve and cards switch to "Resolved YES/NO" |
+| Nov. 4, 06:00 UTC | The site switches to results: markets show "Resolved YES/NO" or "pending", and `/results/2026/` is published |
+| Jan. 3, 2027 | The 120th Congress convenes, and the home page leads with the party-line index |

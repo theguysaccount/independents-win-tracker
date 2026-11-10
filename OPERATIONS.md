@@ -18,6 +18,14 @@ run re-enables all three scheduled workflows through the API (`PUT /actions/work
 pushes an empty `keep-alive` commit if the last commit is older than 45 days, which can happen after
 the markets resolve and Congress is in recess.
 
+## The election calendar (automatic)
+
+`config/tracker.json` → `phases` sets when the site's framing changes. Each switch happens on the next build after the date:
+- **Before 2026-11-04 06:00 UTC:** live odds, and the countdown to Election Day.
+- **Results (from 2026-11-04 06:00 UTC):** the home page leads with how each market resolved, alongside the state's official results (`official_results`, one per tracked state). `/results/2026/` is published. Unresolved markets say "pending" and are never called.
+- **Archive (from 2027-01-03 17:00 UTC, when the 120th Congress convenes):** the home page leads with the party-line index, and the 2026 results stay at `/results/2026/`.
+- **New Congress:** the party-line scores still cover the 119th Congress (2025–26). To score the 120th once it has votes, set `CONGRESS = 120` in `tracker/votes.py` and add a page per Congress, or keep 119 as the archive.
+
 ## What to watch
 
 - **Actions tab → "Update and deploy".** A red run means the site was *not* updated that time. The previous site is still live. Read the failing step: Tests, Guard (its log lists each problem), or Refresh.
