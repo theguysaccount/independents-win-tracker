@@ -2151,7 +2151,7 @@
    "name_raw": "KING-HINDS, KIMBERLYN KAY",
    "office": "H",
    "other_loans": 0.0,
-   "pac": 55254.75,
+   "pac": 51295.52,
    "party": "REP",
    "party_label": "REP",
    "pcc": "C00873554",
@@ -4758,7 +4758,7 @@
    "debts": 950000.0,
    "disb": 4460456.43,
    "district": "06",
-   "ici": "C",
+   "ici": "I",
    "id": "H6FL06258",
    "independent": false,
    "indiv": 2722010.62,
@@ -13083,7 +13083,7 @@
   "H6WA05254": {
    "coh": 16962.99,
    "cvg_end": "2026-09-30",
-   "debts": 0.0,
+   "debts": 2750.0,
    "disb": 13162.18,
    "district": "05",
    "ici": "C",
@@ -16948,12 +16948,12 @@
    "coh": 1435.7,
    "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 17363.76,
+   "disb": 26292.33,
    "district": "00",
    "ici": "C",
    "id": "S6TX00495",
    "independent": true,
-   "indiv": 10551.17,
+   "indiv": 14261.58,
    "major": false,
    "name": "Jade Simmons",
    "name_raw": "SIMMONS, JADE",
@@ -16964,8 +16964,8 @@
    "party_label": "Independent",
    "pcc": "C00923201",
    "race": "TX-S",
-   "receipts": 18959.79,
-   "self": 8408.62,
+   "receipts": 27728.03,
+   "self": 13466.45,
    "state": "TX"
   },
   "S6TX00511": {
@@ -17311,7 +17311,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-10T07:19:41Z",
+ "fetched_at": "2026-11-11T07:03:48Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18241,11 +18241,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Tue, 10 Nov 2026 06:36:27 GMT",
+   "last_modified": "Wed, 11 Nov 2026 06:45:36 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Tue, 10 Nov 2026 06:36:16 GMT",
+   "last_modified": "Wed, 11 Nov 2026 06:45:24 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
