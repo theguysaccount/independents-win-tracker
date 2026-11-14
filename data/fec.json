@@ -273,7 +273,7 @@
    "ici": "I",
    "id": "H0NJ07261",
    "independent": false,
-   "indiv": 2791280.07,
+   "indiv": 2794580.07,
    "major": true,
    "name": "Thomas Kean Jr.",
    "name_raw": "KEAN, THOMAS H. JR.",
@@ -284,7 +284,7 @@
    "party_label": "REP",
    "pcc": "C00703058",
    "race": "NJ-H-07",
-   "receipts": 6128373.01,
+   "receipts": 6131673.01,
    "self": 0.0,
    "state": "NJ"
   },
@@ -2716,12 +2716,12 @@
    "coh": 5225595.46,
    "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 11248587.96,
+   "disb": 11248671.96,
    "district": "07",
    "ici": "I",
    "id": "H4VA07234",
    "independent": false,
-   "indiv": 14967603.45,
+   "indiv": 14967687.45,
    "major": true,
    "name": "Yevgeny Vindman",
    "name_raw": "VINDMAN, YEVGENY 'EUGENE'",
@@ -2732,7 +2732,7 @@
    "party_label": "DEM",
    "pcc": "C00856955",
    "race": "VA-H-07",
-   "receipts": 16339249.68,
+   "receipts": 16339333.68,
    "self": 715.67,
    "state": "VA"
   },
@@ -4417,10 +4417,10 @@
    "state": "CO"
   },
   "H6CO06173": {
-   "coh": 566.23,
-   "cvg_end": "2026-09-30",
+   "coh": 690.83,
+   "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 5461.12,
+   "disb": 5636.52,
    "district": "06",
    "ici": "C",
    "id": "H6CO06173",
@@ -4436,8 +4436,8 @@
    "party_label": "LIB",
    "pcc": "C00949040",
    "race": "CO-H-06",
-   "receipts": 6027.35,
-   "self": 5250.0,
+   "receipts": 6327.35,
+   "self": 5550.0,
    "state": "CO"
   },
   "H6CT03178": {
@@ -17311,7 +17311,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-13T07:47:26Z",
+ "fetched_at": "2026-11-14T10:06:05Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18241,11 +18241,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Fri, 13 Nov 2026 06:37:46 GMT",
+   "last_modified": "Sat, 14 Nov 2026 06:41:52 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Fri, 13 Nov 2026 06:37:33 GMT",
+   "last_modified": "Sat, 14 Nov 2026 06:41:40 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
