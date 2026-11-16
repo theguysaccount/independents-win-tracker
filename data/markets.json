@@ -205,19 +205,19 @@
    "id": "how-many-independents-will-be-elected-to-congress",
    "outcomes": [
     {
-     "ask": 0.999,
+     "ask": 0.998,
      "bid": 0.951,
-     "day_change": 0.006,
+     "day_change": 0.009,
      "id": "4882440",
      "label": "0",
      "last": 0.999,
-     "liquidity": 104.91964,
-     "price": 0.975,
+     "liquidity": 101.39155,
+     "price": 0.9745,
      "question": "Will 0 Independents be elected to Congress in 2026?",
      "resolved_at": "",
      "result": "",
      "token": "3873573133304725058821567885218502869709710914437915482052014711492627476615",
-     "volume": 12301.912708999997,
+     "volume": 12301.912708999998,
      "volume_24h": 14.994
     },
     {
@@ -227,7 +227,7 @@
      "id": "4882441",
      "label": "1",
      "last": 0.029,
-     "liquidity": 450.06852,
+     "liquidity": 378.40055,
      "price": 0.0145,
      "question": "Will 1 Independent be elected to Congress in 2026?",
      "resolved_at": "",
@@ -237,14 +237,14 @@
      "volume_24h": null
     },
     {
-     "ask": 0.014,
+     "ask": 0.01,
      "bid": 0.001,
-     "day_change": 0.0005,
+     "day_change": -0.0015,
      "id": "4882442",
      "label": "2",
      "last": 0.14,
-     "liquidity": 347.53321,
-     "price": 0.0075,
+     "liquidity": 351.68601,
+     "price": 0.0055,
      "question": "Will 2 Independents be elected to Congress in 2026?",
      "resolved_at": "",
      "result": "",
@@ -332,7 +332,7 @@
  ],
  "discovered_at": "2026-11-16T07:52:20Z",
  "errors": [],
- "fetched_at": "2026-11-16T07:52:20Z",
+ "fetched_at": "2026-11-16T09:46:59Z",
  "races": [
   {
    "id": "HOUSEAKAL-26",
@@ -353,7 +353,7 @@
      "rules": "If a member of the Republican party is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
      "volume": 766530.75,
-     "volume_24h": 9291.21
+     "volume_24h": 9191.15
     },
     {
      "ask": 0.02,
@@ -371,7 +371,7 @@
      "rules": "If Bill Hill is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "active",
      "volume": 453070.88,
-     "volume_24h": 40036.24
+     "volume_24h": 39978.24
     },
     {
      "ask": 0.001,
@@ -409,7 +409,7 @@
      "id": "1279604",
      "label": "Republican Party",
      "last": 0.991,
-     "liquidity": 22544.10687,
+     "liquidity": 25201.24859,
      "party_outcome": false,
      "price": 0.9925,
      "question": "Will the Republican Party win the AK-AL House seat?",
@@ -417,8 +417,8 @@
      "result": "",
      "status": "active",
      "token": "55824536479051011400121423796079002447209373774987169287762599768443101947717",
-     "volume": 134311.910529,
-     "volume_24h": 4752.835716
+     "volume": 134311.91052900002,
+     "volume_24h": 4746.915716
     },
     {
      "ask": 0.008,
@@ -428,7 +428,7 @@
      "id": "1279607",
      "label": "Bill Hill",
      "last": 0.008,
-     "liquidity": 19288.19192,
+     "liquidity": 18807.91551,
      "party_outcome": false,
      "price": 0.0075,
      "question": "Will Bill Hill win the AK-AL House seat?",
@@ -436,7 +436,7 @@
      "result": "",
      "status": "active",
      "token": "25264395884794585041068738174790155913872374353541552562714054259339230907354",
-     "volume": 63522.12853999999,
+     "volume": 63522.12854,
      "volume_24h": 127.02
     },
     {
@@ -447,7 +447,7 @@
      "id": "1279605",
      "label": "Democratic Party",
      "last": 0.028,
-     "liquidity": 13601.50435,
+     "liquidity": 13199.46241,
      "party_outcome": false,
      "price": 0.0005,
      "question": "Will the Democratic Party win the AK-AL House seat?",
@@ -466,7 +466,7 @@
      "id": "1279608",
      "label": "Jim McDermott",
      "last": 0.002,
-     "liquidity": 10279.71667,
+     "liquidity": 10579.96655,
      "party_outcome": false,
      "price": 0.0005,
      "question": "Will Jim McDermott win the AK-AL House seat?",
