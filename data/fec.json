@@ -1161,7 +1161,7 @@
    "ici": "I",
    "id": "H2NJ08232",
    "independent": false,
-   "indiv": 1251801.33,
+   "indiv": 1251432.85,
    "major": true,
    "name": "Robert Menendez",
    "name_raw": "MENENDEZ, ROBERT J.",
@@ -1173,7 +1173,7 @@
    "pcc": "C00799767",
    "race": "NJ-H-08",
    "receipts": 2236501.68,
-   "self": 0.0,
+   "self": 368.48,
    "state": "NJ"
   },
   "H2NJ08265": {
@@ -1209,7 +1209,7 @@
    "ici": "C",
    "id": "H2NJ13075",
    "independent": false,
-   "indiv": 1251801.33,
+   "indiv": 1251432.85,
    "major": true,
    "name": "Robert Menendez",
    "name_raw": "MENENDEZ, ROBERT",
@@ -1221,7 +1221,7 @@
    "pcc": "C00799767",
    "race": "NJ-H-08",
    "receipts": 2236501.68,
-   "self": 0.0,
+   "self": 368.48,
    "state": "NJ"
   },
   "H2NY00010": {
@@ -2665,10 +2665,10 @@
    "state": "TX"
   },
   "H4UT02395": {
-   "coh": 279.8,
-   "cvg_end": "2026-06-30",
+   "coh": 83.25,
+   "cvg_end": "2026-09-30",
    "debts": 10000.0,
-   "disb": 8850.76,
+   "disb": 9047.31,
    "district": "02",
    "ici": "C",
    "id": "H4UT02395",
@@ -2905,15 +2905,15 @@
    "state": "WA"
   },
   "H4WA09095": {
-   "coh": 4566.99,
-   "cvg_end": "2026-09-30",
+   "coh": 0.0,
+   "cvg_end": "2026-11-16",
    "debts": 0.0,
-   "disb": 152526.56,
+   "disb": 157235.44,
    "district": "09",
    "ici": "C",
    "id": "H4WA09095",
    "independent": false,
-   "indiv": 37613.19,
+   "indiv": 37755.08,
    "major": true,
    "name": "Melissa Chaudhry",
    "name_raw": "CHAUDHRY, MELISSA",
@@ -2924,7 +2924,7 @@
    "party_label": "DEM",
    "pcc": "C00876383",
    "race": "WA-H-09",
-   "receipts": 40259.99,
+   "receipts": 40401.88,
    "self": 0.0,
    "state": "WA"
   },
@@ -4828,12 +4828,12 @@
    "coh": 96905.4,
    "cvg_end": "2026-10-14",
    "debts": 0.0,
-   "disb": 522399.44,
+   "disb": 522156.86,
    "district": "06",
    "ici": "C",
    "id": "H6FL06340",
    "independent": false,
-   "indiv": 616565.28,
+   "indiv": 616815.28,
    "major": true,
    "name": "Eric Yonce",
    "name_raw": "YONCE, ERIC",
@@ -4844,7 +4844,7 @@
    "party_label": "DEM",
    "pcc": "C00913434",
    "race": "FL-H-06",
-   "receipts": 619304.84,
+   "receipts": 619554.84,
    "self": 2064.56,
    "state": "FL"
   },
@@ -6844,7 +6844,7 @@
    "coh": 76729.96,
    "cvg_end": "2026-10-14",
    "debts": 150000.0,
-   "disb": 261555.07,
+   "disb": 261398.91,
    "district": "01",
    "ici": "C",
    "id": "H6IA01213",
@@ -6854,14 +6854,14 @@
    "name": "Michael Bridgford",
    "name_raw": "BRIDGFORD, MICHAEL",
    "office": "H",
-   "other_loans": 100000.0,
+   "other_loans": 0.0,
    "pac": 5000.0,
    "party": "IND",
    "party_label": "Independent",
    "pcc": "C00947432",
    "race": "IA-H-01",
-   "receipts": 338285.03,
-   "self": 149027.66,
+   "receipts": 338128.87,
+   "self": 248871.5,
    "state": "IA"
   },
   "H6IA02179": {
@@ -9267,13 +9267,13 @@
   "H6NV01356": {
    "coh": 544.3,
    "cvg_end": "2026-06-30",
-   "debts": 0.0,
-   "disb": 81853.88,
+   "debts": 24000.0,
+   "disb": 67853.88,
    "district": "01",
    "ici": "C",
    "id": "H6NV01356",
    "independent": false,
-   "indiv": 82273.18,
+   "indiv": 68273.18,
    "major": true,
    "name": "Joy Hoover",
    "name_raw": "HOOVER, JOY",
@@ -9284,7 +9284,7 @@
    "party_label": "DEM",
    "pcc": "C00916445",
    "race": "NV-H-01",
-   "receipts": 82398.18,
+   "receipts": 68398.18,
    "self": 0.0,
    "state": "NV"
   },
@@ -17311,7 +17311,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-16T07:52:23Z",
+ "fetched_at": "2026-11-17T10:34:07Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -17881,8 +17881,8 @@
    "H6NV01331",
    "H8NV03036",
    "H6NV01315",
-   "H6NV01356",
    "H4NV01237",
+   "H6NV01356",
    "H6NV01349",
    "H8NV01113",
    "H6NV01323"
@@ -18241,11 +18241,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Mon, 16 Nov 2026 06:39:41 GMT",
+   "last_modified": "Tue, 17 Nov 2026 06:38:46 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Mon, 16 Nov 2026 06:39:29 GMT",
+   "last_modified": "Tue, 17 Nov 2026 06:38:34 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
