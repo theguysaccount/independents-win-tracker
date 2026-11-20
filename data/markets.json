@@ -127,14 +127,14 @@
    "id": "KXIHOUSEWON-26NOV03",
    "outcomes": [
     {
-     "ask": 0.04,
+     "ask": 0.03,
      "bid": 0.0,
      "id": "KXIHOUSEWON-26NOV03-AL1",
      "label": "At least 1",
      "last": 0.01,
      "open_interest": 3442.62,
      "prev_price": 0.01,
-     "price": 0.02,
+     "price": 0.015,
      "question": "Will the number of U.S. House seats won by candidates unaffiliated with a political party be at least 1 in the 2026 U.S. House elections?",
      "resolved_at": "",
      "result": "",
@@ -218,7 +218,7 @@
      "result": "yes",
      "token": "3873573133304725058821567885218502869709710914437915482052014711492627476615",
      "volume": 12359.362709,
-     "volume_24h": 47.45
+     "volume_24h": null
     },
     {
      "ask": 0.001,
@@ -233,8 +233,8 @@
      "resolved_at": "2026-11-19T06:13:43Z",
      "result": "no",
      "token": "11024737243283509353487217755179556143471151973689472593578601757208531976589",
-     "volume": 3238.50559,
-     "volume_24h": 80.0
+     "volume": 3238.5055899999998,
+     "volume_24h": null
     },
     {
      "ask": 0.001,
@@ -250,7 +250,7 @@
      "result": "no",
      "token": "96722805096217098567287748176151739276255265226462867280409354202439768906620",
      "volume": 873.9254920000001,
-     "volume_24h": 81.454005
+     "volume_24h": null
     },
     {
      "ask": 0.007,
@@ -330,9 +330,9 @@
    "url": "https://polymarket.com/event/which-party-will-win-the-senate-in-2026"
   }
  ],
- "discovered_at": "2026-11-19T08:41:34Z",
+ "discovered_at": "2026-11-20T08:23:03Z",
  "errors": [],
- "fetched_at": "2026-11-20T00:56:03Z",
+ "fetched_at": "2026-11-20T08:23:03Z",
  "races": [
   {
    "id": "HOUSEAKAL-26",
@@ -345,7 +345,7 @@
      "label": "Nick Begich III",
      "last": 0.999,
      "open_interest": 455157.11,
-     "prev_price": 0.984,
+     "prev_price": 0.999,
      "price": 1.0,
      "question": "Will Republican win the House race for AK-AL?",
      "resolved_at": "2026-11-19T02:33:05Z",
@@ -353,7 +353,7 @@
      "rules": "If a member of the Republican party is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 871270.27,
-     "volume_24h": 25831.36
+     "volume_24h": 0.0
     },
     {
      "ask": 1.0,
@@ -381,7 +381,7 @@
      "label": "Bill Hill",
      "last": 0.02,
      "open_interest": 508162.39,
-     "prev_price": 0.01,
+     "prev_price": 0.02,
      "price": 0.0,
      "question": "Will Bill Hill win the House race for AK-AL?",
      "resolved_at": "2026-11-19T02:33:05Z",
@@ -389,7 +389,7 @@
      "rules": "If Bill Hill is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 765418.81,
-     "volume_24h": 8580.6
+     "volume_24h": 0.0
     }
    ],
    "race": "AK-H-00",

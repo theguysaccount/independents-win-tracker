@@ -8449,15 +8449,15 @@
    "state": "NE"
   },
   "H6NE03198": {
-   "coh": 15673.93,
+   "coh": 1254.93,
    "cvg_end": "2026-10-14",
-   "debts": 10000.0,
-   "disb": 63753.57,
+   "debts": 0.0,
+   "disb": 70604.88,
    "district": "03",
    "ici": "C",
    "id": "H6NE03198",
    "independent": true,
-   "indiv": 75495.5,
+   "indiv": 69076.81,
    "major": false,
    "name": "Mark Cohen",
    "name_raw": "COHEN, MARK",
@@ -8468,8 +8468,8 @@
    "party_label": "Non-Party",
    "pcc": "C00930859",
    "race": "NE-H-03",
-   "receipts": 75900.5,
-   "self": 405.0,
+   "receipts": 71859.81,
+   "self": 2508.0,
    "state": "NE"
   },
   "H6NE03206": {
@@ -17335,7 +17335,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-19T08:41:38Z",
+ "fetched_at": "2026-11-20T08:23:07Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18266,11 +18266,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Thu, 19 Nov 2026 06:47:05 GMT",
+   "last_modified": "Fri, 20 Nov 2026 06:48:14 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Thu, 19 Nov 2026 06:46:53 GMT",
+   "last_modified": "Fri, 20 Nov 2026 06:48:02 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
