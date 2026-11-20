@@ -332,7 +332,7 @@
  ],
  "discovered_at": "2026-11-19T08:41:34Z",
  "errors": [],
- "fetched_at": "2026-11-20T00:52:08Z",
+ "fetched_at": "2026-11-20T00:56:03Z",
  "races": [
   {
    "id": "HOUSEAKAL-26",
@@ -353,7 +353,7 @@
      "rules": "If a member of the Republican party is sworn in for AK-AL for the term beginning in 2027, then the market resolves to Yes.",
      "status": "finalized",
      "volume": 871270.27,
-     "volume_24h": 25856.97
+     "volume_24h": 25831.36
     },
     {
      "ask": 1.0,
