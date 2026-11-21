@@ -12841,15 +12841,15 @@
    "state": "WA"
   },
   "H6WA01220": {
-   "coh": 12943.17,
-   "cvg_end": "2026-07-15",
+   "coh": 0.0,
+   "cvg_end": "2026-09-30",
    "debts": 0.0,
-   "disb": 8843.61,
+   "disb": 28123.85,
    "district": "01",
    "ici": "C",
    "id": "H6WA01220",
    "independent": true,
-   "indiv": 17197.32,
+   "indiv": 23303.67,
    "major": false,
    "name": "James Etzkorn",
    "name_raw": "ETZKORN, JAMES",
@@ -12860,8 +12860,8 @@
    "party_label": "Independent",
    "pcc": "C00935254",
    "race": "WA-H-01",
-   "receipts": 21786.78,
-   "self": 4589.46,
+   "receipts": 28123.85,
+   "self": 4820.18,
    "state": "WA"
   },
   "H6WA04190": {
@@ -17282,7 +17282,7 @@
   },
   "S8MS00261": {
    "coh": 1395723.78,
-   "cvg_end": "2026-10-14",
+   "cvg_end": "2026-11-20",
    "debts": 60000.0,
    "disb": 3720843.06,
    "district": "00",
@@ -17335,7 +17335,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-20T08:23:07Z",
+ "fetched_at": "2026-11-21T12:56:43Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18266,11 +18266,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Fri, 20 Nov 2026 06:48:14 GMT",
+   "last_modified": "Sat, 21 Nov 2026 06:51:00 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Fri, 20 Nov 2026 06:48:02 GMT",
+   "last_modified": "Sat, 21 Nov 2026 06:50:47 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
