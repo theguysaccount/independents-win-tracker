@@ -5713,7 +5713,7 @@
    "state": "FL"
   },
   "H6FL19186": {
-   "coh": 6835.12,
+   "coh": 6860.12,
    "cvg_end": "2026-09-30",
    "debts": 25000.0,
    "disb": 1989875.63,
@@ -5721,7 +5721,7 @@
    "ici": "O",
    "id": "H6FL19186",
    "independent": false,
-   "indiv": 1813711.17,
+   "indiv": 1813736.17,
    "major": true,
    "name": "Catalina Lauf",
    "name_raw": "LAUF, CATALINA",
@@ -5732,7 +5732,7 @@
    "party_label": "REP",
    "pcc": "C00921783",
    "race": "FL-H-19",
-   "receipts": 1996710.75,
+   "receipts": 1996735.75,
    "self": 25000.0,
    "state": "FL"
   },
@@ -17335,7 +17335,7 @@
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-23T10:48:32Z",
+ "fetched_at": "2026-11-24T18:21:31Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18266,11 +18266,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Mon, 23 Nov 2026 06:41:39 GMT",
+   "last_modified": "Tue, 24 Nov 2026 06:39:48 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Mon, 23 Nov 2026 06:41:27 GMT",
+   "last_modified": "Tue, 24 Nov 2026 06:39:35 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }
