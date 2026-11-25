@@ -192,8 +192,8 @@
      "question": "Will any independent or third-party candidate win an election in the U.S. House or Senate in 2026?",
      "resolved_at": "",
      "result": "",
-     "volume": 12808.47,
-     "volume_24h": 0.0
+     "volume": 12841.21,
+     "volume_24h": 32.74
     }
    ],
    "series": "KXUSINDEPENDENTCONGRESS",
@@ -330,9 +330,9 @@
    "url": "https://polymarket.com/event/which-party-will-win-the-senate-in-2026"
   }
  ],
- "discovered_at": "2026-11-24T18:21:28Z",
+ "discovered_at": "2026-11-25T12:35:51Z",
  "errors": [],
- "fetched_at": "2026-11-25T02:48:34Z",
+ "fetched_at": "2026-11-25T12:35:51Z",
  "races": [
   {
    "id": "HOUSEAKAL-26",
