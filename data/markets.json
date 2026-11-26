@@ -187,13 +187,13 @@
      "label": "Yes",
      "last": 0.056,
      "open_interest": 3263.44,
-     "prev_price": 0.01,
+     "prev_price": 0.056,
      "price": 0.035,
      "question": "Will any independent or third-party candidate win an election in the U.S. House or Senate in 2026?",
      "resolved_at": "",
      "result": "",
      "volume": 12851.72,
-     "volume_24h": 10.51
+     "volume_24h": 0.0
     }
    ],
    "series": "KXUSINDEPENDENTCONGRESS",
@@ -332,7 +332,7 @@
  ],
  "discovered_at": "2026-11-26T14:18:50Z",
  "errors": [],
- "fetched_at": "2026-11-26T14:29:53Z",
+ "fetched_at": "2026-11-26T23:14:03Z",
  "races": [
   {
    "id": "HOUSEAKAL-26",
