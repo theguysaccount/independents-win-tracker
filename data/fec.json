@@ -2233,26 +2233,26 @@
    "state": "NC"
   },
   "H4NC12100": {
-   "coh": 483996.68,
-   "cvg_end": "2026-10-14",
+   "coh": 438821.89,
+   "cvg_end": "2026-11-23",
    "debts": 0.0,
-   "disb": 572787.62,
+   "disb": 671866.41,
    "district": "12",
    "ici": "I",
    "id": "H4NC12100",
    "independent": false,
-   "indiv": 118472.56,
+   "indiv": 145776.56,
    "major": true,
    "name": "Alma Adams",
    "name_raw": "ADAMS, ALMA SHEALEY",
    "office": "H",
    "other_loans": 0.0,
-   "pac": 363565.0,
+   "pac": 390165.0,
    "party": "DEM",
    "party_label": "DEM",
    "pcc": "C00546358",
    "race": "NC-H-12",
-   "receipts": 483374.93,
+   "receipts": 537278.93,
    "self": 0.0,
    "state": "NC"
   },
@@ -5785,15 +5785,15 @@
    "state": "FL"
   },
   "H6FL19277": {
-   "coh": 15417.15,
-   "cvg_end": "2026-10-14",
+   "coh": 2498.81,
+   "cvg_end": "2026-11-23",
    "debts": 36454.0,
-   "disb": 54565.93,
+   "disb": 71895.6,
    "district": "19",
    "ici": "O",
    "id": "H6FL19277",
    "independent": false,
-   "indiv": 31407.61,
+   "indiv": 35818.94,
    "major": true,
    "name": "Victor Arias",
    "name_raw": "ARIAS, VICTOR M.",
@@ -5804,7 +5804,7 @@
    "party_label": "DEM",
    "pcc": "C00934174",
    "race": "FL-H-19",
-   "receipts": 69983.08,
+   "receipts": 74394.41,
    "self": 38500.0,
    "state": "FL"
   },
@@ -11068,12 +11068,12 @@
    "coh": 73685.88,
    "cvg_end": "2026-10-14",
    "debts": 165000.0,
-   "disb": 1183516.61,
+   "disb": 1186816.61,
    "district": "07",
    "ici": "C",
    "id": "H6TN07286",
    "independent": false,
-   "indiv": 862298.54,
+   "indiv": 865598.54,
    "major": true,
    "name": "Darden Copeland",
    "name_raw": "COPELAND, DARDEN HUNTER",
@@ -11084,7 +11084,7 @@
    "party_label": "DEM",
    "pcc": "C00913301",
    "race": "TN-H-07",
-   "receipts": 1257202.49,
+   "receipts": 1260502.49,
    "self": 391903.95,
    "state": "TN"
   },
@@ -17330,12 +17330,12 @@
   }
  },
  "counts": {
-  "candidates_2026": 2562,
+  "candidates_2026": 2563,
   "independent_filers": 131,
   "independent_filers_listed": 120
  },
  "cycle": 2026,
- "fetched_at": "2026-11-25T12:35:53Z",
+ "fetched_at": "2026-11-26T14:18:56Z",
  "races": {
   "AK-H-00": [
    "H2AK01083",
@@ -18266,11 +18266,11 @@
  },
  "source": {
   "cn": {
-   "last_modified": "Wed, 25 Nov 2026 06:40:52 GMT",
+   "last_modified": "Thu, 26 Nov 2026 06:38:45 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip"
   },
   "weball": {
-   "last_modified": "Wed, 25 Nov 2026 06:39:39 GMT",
+   "last_modified": "Thu, 26 Nov 2026 06:38:34 GMT",
    "url": "https://www.fec.gov/files/bulk-downloads/2026/weball26.zip"
   }
  }

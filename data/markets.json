@@ -193,7 +193,7 @@
      "resolved_at": "",
      "result": "",
      "volume": 12851.72,
-     "volume_24h": 43.25
+     "volume_24h": 10.51
     }
    ],
    "series": "KXUSINDEPENDENTCONGRESS",
@@ -330,9 +330,9 @@
    "url": "https://polymarket.com/event/which-party-will-win-the-senate-in-2026"
   }
  ],
- "discovered_at": "2026-11-25T12:35:51Z",
+ "discovered_at": "2026-11-26T14:18:50Z",
  "errors": [],
- "fetched_at": "2026-11-26T04:26:00Z",
+ "fetched_at": "2026-11-26T14:18:50Z",
  "races": [
   {
    "id": "HOUSEAKAL-26",
